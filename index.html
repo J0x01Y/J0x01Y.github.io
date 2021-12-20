@@ -1,11 +1,25 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-TW">
 <head>
-  <meta charset="utf-8">
-  
-  
-  <title>J1Y工作筆記</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"j0x01y.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
   <meta name="description" content="x86 BIOS&#x2F; Yocto Project&#x2F; Embedded Linux&#x2F; MCU&#x2F; STM32">
 <meta property="og:type" content="website">
 <meta property="og:title" content="J1Y工作筆記">
@@ -15,103 +29,196 @@
 <meta property="og:locale" content="zh_TW">
 <meta property="article:author" content="J1Y">
 <meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://j0x01y.github.io/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : true,
+    isPost : false,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>J1Y工作筆記</title>
   
-    <link rel="alternate" href="/atom.xml" title="J1Y工作筆記" type="application/atom+xml">
-  
-  
-    <link rel="shortcut icon" href="/favicon.png">
-  
-  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">J1Y工作筆記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">一個碼農的工作日常紀錄</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>歸檔</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>標籤</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分類</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
     
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
 
-  
-  
-<link rel="stylesheet" href="/css/style.css">
 
-  
-    
-<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
 
-  
-<meta name="generator" content="Hexo 5.4.0"></head>
-
-<body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">J1Y工作筆記</a>
-      </h1>
+          <div class="content index posts-expand">
+            
       
-        <h2 id="subtitle-wrap">
-          <a href="/" id="subtitle">一個碼農的工作日常紀錄</a>
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://j0x01y.github.io/2021/12/20/git-repository-migration-to-gerrit/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="J1Y">
+      <meta itemprop="description" content="x86 BIOS/ Yocto Project/ Embedded Linux/ MCU/ STM32">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="J1Y工作筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/12/20/git-repository-migration-to-gerrit/" class="post-title-link" itemprop="url">Git repository搬移到gerrit</a>
         </h2>
-      
-    </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
-        
-          <a class="main-nav-link" href="/">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
-        
-        <a id="nav-search-btn" class="nav-icon" title="搜尋"></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜尋"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://j0x01y.github.io"></form>
-      </div>
-    </div>
-  </div>
-</header>
 
-      <div class="outer">
-        <section id="main">
-  
-    <article id="post-git-repository-migration-to-gerrit" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2021/12/20/git-repository-migration-to-gerrit/" class="article-date">
-  <time class="dt-published" datetime="2021-12-20T04:56:49.000Z" itemprop="datePublished">2021-12-20</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2021/12/20/git-repository-migration-to-gerrit/">Git repository搬移到gerrit</a>
-    </h1>
-  
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+              
 
+              <time title="創建時間：2021-12-20 12:56:49 / 修改時間：16:54:57" itemprop="dateCreated datePublished" datetime="2021-12-20T12:56:49+08:00">2021-12-20</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Git-Server/" itemprop="url" rel="index"><span itemprop="name">Git Server</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
       </header>
+
     
-    <div class="e-content article-entry" itemprop="articleBody">
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
-        <h4 id="Mirror-repo-form-gitlab-to-gerrit"><a href="#Mirror-repo-form-gitlab-to-gerrit" class="headerlink" title="Mirror repo form gitlab to gerrit"></a>Mirror repo form gitlab to gerrit</h4><p>主要是需要加上<code>--mirror</code>參數再進行clone/push</p>
+          <h4 id="Mirror-repo-form-gitlab-to-gerrit"><a href="#Mirror-repo-form-gitlab-to-gerrit" class="headerlink" title="Mirror repo form gitlab to gerrit"></a>Mirror repo form gitlab to gerrit</h4><p>主要是需要加上<code>--mirror</code>參數再進行clone/push</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git clone --mirror ssh://gitlab/repo.git</span><br><span class="line">cd repo.git/</span><br><span class="line">git remote add gerrit ssh://gerrit/repo</span><br><span class="line">git push --mirror gerrit</span><br></pre></td></tr></table></figure>
+
 <p>但push時會產生許多錯誤, 需要針對Gerrit server進行調整, 以下是我遇到的幾個錯誤以及解決方式</p>
-<ul>
-<li><code>remote: You need &#39;Forge Committer&#39; rights to push commits with another user as committer</code><br>因為TAG創建者不是推送者, 就會顯示這個錯誤; <code>git push</code>時會顯示以下內容<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">remote: You need &#x27;Forge Committer&#x27; rights to push commits with another user as committer.</span><br><span class="line">remote: User: J1Y</span><br><span class="line">remote: Contact an administrator to fix the permissions</span><br><span class="line">! [remote rejected]     2.10.0-dev -&gt; 2.10.0-dev (prohibited by Gerrit: not permitted: forge committer)</span><br><span class="line">! [remote rejected]     2.10.0-rc1 -&gt; 2.10.0-rc1 (prohibited by Gerrit: not permitted: forge committer)</span><br></pre></td></tr></table></figure>
-需要修改Gerrit權限設定開放以下權限<br><code>Allow Forge Author Identity</code><br><code>Allow Forge  Committer Identity</code><br><code>Allow Forge Server Identity</code></li>
-</ul>
+<h5 id="remote-You-need-39-Forge-Committer-39-rights-to-push-commits-with-another-user-as-committer"><a href="#remote-You-need-39-Forge-Committer-39-rights-to-push-commits-with-another-user-as-committer" class="headerlink" title="remote: You need &#39;Forge Committer&#39; rights to push commits with another user as committer"></a><code>remote: You need &#39;Forge Committer&#39; rights to push commits with another user as committer</code></h5><p>因為TAG創建者不是推送者, 就會顯示這個錯誤; <code>git push</code>時會顯示以下內容</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">remote: You need &#x27;Forge Committer&#x27; rights to push commits with another user as committer.</span><br><span class="line">remote: User: J1Y</span><br><span class="line">remote: Contact an administrator to fix the permissions</span><br><span class="line">! [remote rejected]     2.10.0-dev -&gt; 2.10.0-dev (prohibited by Gerrit: not permitted: forge committer)</span><br><span class="line">! [remote rejected]     2.10.0-rc1 -&gt; 2.10.0-rc1 (prohibited by Gerrit: not permitted: forge committer)</span><br></pre></td></tr></table></figure>
+<p>需要修改Gerrit權限設定開放以下權限<br><code>Allow Forge Author Identity</code><br><code>Allow Forge  Committer Identity</code><br><code>Allow Forge Server Identity</code></p>
 <p><img src="/2021/12/20/git-repository-migration-to-gerrit/GerritForgeIdentity.png" alt="GerritForgeIdentity"></p>
-<ul>
-<li><code>remote: commit 028af1d: warning: subject &gt;200 characters; use shorter first paragraph</code><br>開源的專案的commit message裡面通常會包含許多討論內容, 推送時會將其刪減需要修改gerrit的設定,設定檔位於<code>gerrit-site/etc/gerrit.config</code>, 根據需求調整<code>commitmessage.maxSubjectLength</code> &amp; <code>commitmessage.maxLineLength</code>同時建議也修改<code>receive.maxBatchCommits</code> &amp; <code>receive.timeout</code>這兩個設定會影響一次推送的commit數量限制以及超時上限<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[receive]</span><br><span class="line">	maxBatchCommits = 1000000</span><br><span class="line">	timeout = 120min</span><br><span class="line">[commitmessage]</span><br><span class="line">	maxSubjectLength = 200</span><br><span class="line">	maxLineLength = 200</span><br></pre></td></tr></table></figure></li>
-<li><code>remote: Processing changes: refs: 11 (-)error: branches refs/heads/master, refs/meta/config:</code><br>這個是因為推送時遠端已有相同的分支, 可以將Gerrit的<code>master</code>刪除並且從Gerrit抓<code>config</code><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git fetch gerrit refs/meta/config:refs/meta/config</span><br></pre></td></tr></table></figure></li>
-<li> <code>! [remote rejected]     v0.6.1 -&gt; v0.6.1 (prohibited by Gerrit: update for creating new commit object not permitted)</code><br>這個我就不知道出現的原因, 唯有這個tag沒辦法推上去. 我又額外開啟兩個權限之後就一切正常<br><code>Allow Create Reference</code><br><code>Allow Push with or without force</code></li>
-</ul>
+<h5 id="remote-commit-028af1d-warning-subject-gt-200-characters-use-shorter-first-paragraph"><a href="#remote-commit-028af1d-warning-subject-gt-200-characters-use-shorter-first-paragraph" class="headerlink" title="remote: commit 028af1d: warning: subject &gt;200 characters; use shorter first paragraph"></a><code>remote: commit 028af1d: warning: subject &gt;200 characters; use shorter first paragraph</code></h5><p>開源的專案的commit message裡面通常會包含許多討論內容, 推送時會將其刪減需要修改gerrit的設定,設定檔位於<code>gerrit-site/etc/gerrit.config</code>, 根據需求調整<code>commitmessage.maxSubjectLength</code> &amp; <code>commitmessage.maxLineLength</code>同時建議也修改<code>receive.maxBatchCommits</code> &amp; <code>receive.timeout</code>這兩個設定會影響一次推送的commit數量限制以及超時上限</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[receive]</span><br><span class="line">	maxBatchCommits = 1000000</span><br><span class="line">	timeout = 120min</span><br><span class="line">[commitmessage]</span><br><span class="line">	maxSubjectLength = 200</span><br><span class="line">	maxLineLength = 200</span><br></pre></td></tr></table></figure>
+<h5 id="remote-Processing-changes-refs-11-error-branches-refs-heads-master-refs-meta-config"><a href="#remote-Processing-changes-refs-11-error-branches-refs-heads-master-refs-meta-config" class="headerlink" title="remote: Processing changes: refs: 11 (-)error: branches refs/heads/master, refs/meta/config:"></a><code>remote: Processing changes: refs: 11 (-)error: branches refs/heads/master, refs/meta/config:</code></h5><p>這個是因為推送時遠端已有相同的分支, 可以將Gerrit的<code>master</code>刪除並且從Gerrit抓<code>config</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git fetch gerrit refs/meta/config:refs/meta/config</span><br></pre></td></tr></table></figure>
+<h5 id="remote-rejected-v0-6-1-gt-v0-6-1-prohibited-by-Gerrit-update-for-creating-new-commit-object-not-permitted"><a href="#remote-rejected-v0-6-1-gt-v0-6-1-prohibited-by-Gerrit-update-for-creating-new-commit-object-not-permitted" class="headerlink" title="! [remote rejected]     v0.6.1 -&gt; v0.6.1 (prohibited by Gerrit: update for creating new commit object not permitted)"></a><code>! [remote rejected]     v0.6.1 -&gt; v0.6.1 (prohibited by Gerrit: update for creating new commit object not permitted)</code></h5><p>這個我就不知道出現的原因, 唯有這個tag沒辦法推上去. 我又額外開啟兩個權限之後就一切正常<br><code>Allow Create Reference</code><br><code>Allow Push with or without force</code></p>
 <p><img src="/2021/12/20/git-repository-migration-to-gerrit/GerritCreatRef.png" alt="GerritCreatRef"></p>
 <p>修改完以上設定後終於可以完整鏡像repo…完結撒花～</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line">$ git push --mirror gerrit</span><br><span class="line">Enumerating objects: 190731, done.</span><br><span class="line">Counting objects: 100% (190731/190731), done.</span><br><span class="line">Delta compression using up to 64 threads</span><br><span class="line">Compressing objects: 100% (73550/73550), done.</span><br><span class="line">Writing objects: 100% (190731/190731), 83.37 MiB | 12.69 MiB/s, done.</span><br><span class="line">Total 190731 (delta 105786), reused 190731 (delta 105786)</span><br><span class="line">remote: Resolving deltas: 100% (105786/105786)</span><br><span class="line">remote: Counting objects: 190789, done</span><br><span class="line">remote: Processing changes: refs: 57, done    </span><br><span class="line">To ssh://GerritServer:8021/ob</span><br><span class="line"> + 2271be5ce...adf918bc3 refs/meta/config -&gt; refs/meta/config (forced update)</span><br><span class="line"> * [new branch]          dunfell -&gt; dunfell</span><br><span class="line"> * [new branch]          gatesgarth -&gt; gatesgarth</span><br><span class="line"> * [new branch]          hardknott -&gt; hardknott</span><br><span class="line"> * [new branch]          master -&gt; master</span><br><span class="line"> * [new branch]          thud -&gt; thud</span><br><span class="line"> * [new branch]          v1.0-stable -&gt; v1.0-stable</span><br><span class="line"> * [new branch]          warrior -&gt; warrior</span><br><span class="line"> * [new tag]             2.10.0-dev -&gt; 2.10.0-dev</span><br><span class="line"> * [new tag]             2.10.0-rc1 -&gt; 2.10.0-rc1</span><br><span class="line"> * [new tag]             2.11.0-dev -&gt; 2.11.0-dev</span><br><span class="line"> * [new tag]             2.6.0 -&gt; 2.6.0</span><br><span class="line"> * [new tag]             2.6.0-rc1 -&gt; 2.6.0-rc1</span><br><span class="line"> * [new tag]             2.6.0.rc1 -&gt; 2.6.0.rc1</span><br><span class="line"> * [new tag]             2.7.0 -&gt; 2.7.0</span><br><span class="line"> * [new tag]             2.7.0-dev -&gt; 2.7.0-dev</span><br><span class="line"> * [new tag]             2.7.0-rc1 -&gt; 2.7.0-rc1</span><br><span class="line"> * [new tag]             2.8.0 -&gt; 2.8.0</span><br><span class="line"> * [new tag]             2.8.0-dev -&gt; 2.8.0-dev</span><br><span class="line"> * [new tag]             2.8.0-rc1 -&gt; 2.8.0-rc1</span><br><span class="line"> * [new tag]             2.9.0 -&gt; 2.9.0</span><br><span class="line"> * [new tag]             2.9.0-dev -&gt; 2.9.0-dev</span><br><span class="line"> * [new tag]             2.9.0-rc1 -&gt; 2.9.0-rc1</span><br><span class="line"> * [new tag]             v0.1 -&gt; v0.1</span><br><span class="line"> * [new tag]             v0.2 -&gt; v0.2</span><br><span class="line"> * [new tag]             v0.3 -&gt; v0.3</span><br><span class="line"> * [new tag]             v0.4 -&gt; v0.4</span><br><span class="line"> * [new tag]             v0.5 -&gt; v0.5</span><br><span class="line"> * [new tag]             v0.6 -&gt; v0.6</span><br><span class="line"> * [new tag]             v0.6.1 -&gt; v0.6.1</span><br><span class="line"> * [new tag]             v0.7 -&gt; v0.7</span><br><span class="line"> * [new tag]             v0.8 -&gt; v0.8</span><br><span class="line"> * [new tag]             v0.8.1 -&gt; v0.8.1</span><br><span class="line"> * [new tag]             v1.0 -&gt; v1.0</span><br><span class="line"> * [new tag]             v1.0.1 -&gt; v1.0.1</span><br><span class="line"> * [new tag]             v1.0.2 -&gt; v1.0.2</span><br><span class="line"> * [new tag]             v1.0.3 -&gt; v1.0.3</span><br><span class="line"> * [new tag]             v1.0.4 -&gt; v1.0.4</span><br><span class="line"> * [new tag]             v1.0.5 -&gt; v1.0.5</span><br><span class="line"> * [new tag]             v1.99.0 -&gt; v1.99.0</span><br><span class="line"> * [new tag]             v1.99.1 -&gt; v1.99.1</span><br><span class="line"> * [new tag]             v1.99.10 -&gt; v1.99.10</span><br><span class="line"> * [new tag]             v1.99.2 -&gt; v1.99.2</span><br><span class="line"> * [new tag]             v1.99.3 -&gt; v1.99.3</span><br><span class="line"> * [new tag]             v1.99.4 -&gt; v1.99.4</span><br><span class="line"> * [new tag]             v1.99.5 -&gt; v1.99.5</span><br><span class="line"> * [new tag]             v1.99.6 -&gt; v1.99.6</span><br><span class="line"> * [new tag]             v1.99.7 -&gt; v1.99.7</span><br><span class="line"> * [new tag]             v1.99.8 -&gt; v1.99.8</span><br><span class="line"> * [new tag]             v1.99.9 -&gt; v1.99.9</span><br><span class="line"> * [new tag]             v2.0 -&gt; v2.0</span><br><span class="line"> * [new tag]             v2.1 -&gt; v2.1</span><br><span class="line"> * [new tag]             v2.2 -&gt; v2.2</span><br><span class="line"> * [new tag]             v2.3 -&gt; v2.3</span><br><span class="line"> * [new tag]             v2.4 -&gt; v2.4</span><br></pre></td></tr></table></figure>
@@ -119,42 +226,61 @@
 
       
     </div>
-    <footer class="article-footer">
-      <a data-url="https://j0x01y.github.io/2021/12/20/git-repository-migration-to-gerrit/" data-id="ckxedkkvd0001doyk8j7ua6uc" data-title="Git repository搬移到gerrit" class="article-share-link">Share</a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
 
-
-
-  
-    <article id="post-hello-world" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2021/12/20/hello-world/" class="article-date">
-  <time class="dt-published" datetime="2021-12-20T03:04:11.580Z" itemprop="datePublished">2021-12-20</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
     
     
-      <header class="article-header">
-        
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
   
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2021/12/20/hello-world/">Hello World</a>
-    </h1>
+  
   
 
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://j0x01y.github.io/2021/12/20/hello-world/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="J1Y">
+      <meta itemprop="description" content="x86 BIOS/ Yocto Project/ Embedded Linux/ MCU/ STM32">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="J1Y工作筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/12/20/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2021-12-20 11:04:11" itemprop="dateCreated datePublished" datetime="2021-12-20T11:04:11+08:00">2021-12-20</time>
+            </span>
+
+          
+
+        </div>
       </header>
+
     
-    <div class="e-content article-entry" itemprop="articleBody">
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
-        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+          <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
 <h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
 
 <p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
@@ -170,103 +296,186 @@
 
       
     </div>
-    <footer class="article-footer">
-      <a data-url="https://j0x01y.github.io/2021/12/20/hello-world/" data-id="ckxedkkvb0000doyk8xw8f1y1" data-title="Hello World" class="article-share-link">Share</a>
-      
-      
-      
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">J1Y</p>
+  <div class="site-description" itemprop="description">x86 BIOS/ Yocto Project/ Embedded Linux/ MCU/ STM32</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">2</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分類</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">標籤</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="mailto:JerryOneYu@gmail.com" title="E-Mail → mailto:JerryOneYu@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">J1Y</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
     </footer>
   </div>
-  
-</article>
-
-
 
   
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
 
 
-</section>
-        
-          <aside id="sidebar">
-  
-    
-
-  
-    
-
-  
-    
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">彙整</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">十二月 2021</a></li></ul>
-    </div>
-  </div>
+<script src="/js/schemes/pisces.js"></script>
 
 
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">最新文章</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2021/12/20/git-repository-migration-to-gerrit/">Git repository搬移到gerrit</a>
-          </li>
-        
-          <li>
-            <a href="/2021/12/20/hello-world/">Hello World</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
+<script src="/js/next-boot.js"></script>
 
-  
-</aside>
-        
-      </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      
-      &copy; 2021 J1Y<br>
-      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
-    </div>
-  </div>
-</footer>
-
-    </div>
-    <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-</nav>
-    
-
-
-<script src="/js/jquery-3.4.1.min.js"></script>
 
 
 
   
-<script src="/fancybox/jquery.fancybox.min.js"></script>
-
-
-
-
-<script src="/js/script.js"></script>
 
 
 
 
 
-  </div>
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
 </body>
 </html>
