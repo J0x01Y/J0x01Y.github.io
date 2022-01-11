@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+  <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
 <meta name="generator" content="Hexo 6.0.0">
@@ -104,12 +104,12 @@
   .use-motion .logo-line-before i { left: initial; }
   .use-motion .logo-line-after i { right: initial; }
   </style>
-</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</noscript>
 
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">
-  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container use-motion">
+  <div class="container use-motion">
     <div class="headband"></div>
 
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -273,7 +273,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2022-01-11 14:42:29" itemprop="dateModified" datetime="2022-01-11T14:42:29+08:00">2022-01-11</time>
+                <time title="修改時間：2022-01-11 16:04:46" itemprop="dateModified" datetime="2022-01-11T16:04:46+08:00">2022-01-11</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -299,7 +299,7 @@
 
       
           <h4 id="Mirror-repo-form-gitlab-to-gerrit"><a href="#Mirror-repo-form-gitlab-to-gerrit" class="headerlink" title="Mirror repo form gitlab to gerrit"></a>Mirror repo form gitlab to gerrit</h4><p>主要是需要加上<code>--mirror</code>參數再進行clone/push</p>
-<pre class="command-line" data-host="localhost" data-output="" data-user="J1Y"><code class="language-bash">git clone --mirror ssh://gitlab/repo.git
+<pre class="command-line" data-host="localhost" data-output data-user="J1Y"><code class="language-bash">git clone --mirror ssh://gitlab/repo.git
 cd repo.git/
 git remote add gerrit ssh://gerrit/repo
 git push --mirror gerrit</code>
@@ -315,7 +315,7 @@ remote: Contact an administrator to fix the permissions
 </pre>
 
 <p>需要修改Gerrit權限設定開放以下權限<br><code>Allow Forge Author Identity</code><br><code>Allow Forge  Committer Identity</code><br><code>Allow Forge Server Identity</code></p>
-<p><img src="/GerritForgeIdentity.png" alt="GerritForgeIdentity"></p>
+<p><img src="/2021/12/20/git-repository-migration-to-gerrit/GerritForgeIdentity.png" alt="GerritForgeIdentity"></p>
 <h5 id="remote-commit-028af1d-warning-subject-gt-200-characters-use-shorter-first-paragraph"><a href="#remote-commit-028af1d-warning-subject-gt-200-characters-use-shorter-first-paragraph" class="headerlink" title="remote: commit 028af1d: warning: subject &gt;200 characters; use shorter first paragraph"></a><code>remote: commit 028af1d: warning: subject &gt;200 characters; use shorter first paragraph</code></h5><p>開源的專案的commit message裡面通常會包含許多討論內容, 推送時會將其刪減需要修改gerrit的設定,設定檔位於<code>gerrit-site/etc/gerrit.config</code>, 根據需求調整<code>commitmessage.maxSubjectLength</code> &amp; <code>commitmessage.maxLineLength</code>同時建議也修改<code>receive.maxBatchCommits</code> &amp; <code>receive.timeout</code>這兩個設定會影響一次推送的commit數量限制以及超時上限</p>
 <pre class="line-numbers language-none"><code class="language-none">[receive]
 	maxBatchCommits &#x3D; 1000000
@@ -324,11 +324,11 @@ remote: Contact an administrator to fix the permissions
 	maxSubjectLength &#x3D; 200
 	maxLineLength &#x3D; 200<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h5 id="remote-Processing-changes-refs-11-error-branches-refs-heads-master-refs-meta-config"><a href="#remote-Processing-changes-refs-11-error-branches-refs-heads-master-refs-meta-config" class="headerlink" title="remote: Processing changes: refs: 11 (-)error: branches refs/heads/master, refs/meta/config:"></a><code>remote: Processing changes: refs: 11 (-)error: branches refs/heads/master, refs/meta/config:</code></h5><p>這個是因為推送時遠端已有相同的分支, 可以將Gerrit的<code>master</code>刪除並且從Gerrit抓<code>config</code></p>
-<pre class="command-line" data-host="localhost" data-output="" data-user="J1Y"><code class="language-bash">git fetch gerrit refs/meta/config:refs/meta/config</code>
+<pre class="command-line" data-host="localhost" data-output data-user="J1Y"><code class="language-bash">git fetch gerrit refs/meta/config:refs/meta/config</code>
 </pre>
 
 <h5 id="remote-rejected-v0-6-1-gt-v0-6-1-prohibited-by-Gerrit-update-for-creating-new-commit-object-not-permitted"><a href="#remote-rejected-v0-6-1-gt-v0-6-1-prohibited-by-Gerrit-update-for-creating-new-commit-object-not-permitted" class="headerlink" title="! [remote rejected]     v0.6.1 -&gt; v0.6.1 (prohibited by Gerrit: update for creating new commit object not permitted)"></a><code>! [remote rejected]     v0.6.1 -&gt; v0.6.1 (prohibited by Gerrit: update for creating new commit object not permitted)</code></h5><p>這個我就不知道出現的原因, 唯有這個tag沒辦法推上去. 我又額外開啟兩個權限之後就一切正常<br><code>Allow Create Reference</code><br><code>Allow Push with or without force</code></p>
-<p><img src="/GerritCreatRef.png" alt="GerritCreatRef"></p>
+<p><img src="/2021/12/20/git-repository-migration-to-gerrit/GerritCreatRef.png" alt="GerritCreatRef"></p>
 <p>修改完以上設定後終於可以完整鏡像repo…完結撒花～</p>
 <pre class="command-line" data-host="localhost" data-output="2-100" data-user="J1Y"><code class="language-bash">$ git push --mirror gerrit
 Enumerating objects: 190731, done.
@@ -617,7 +617,7 @@ To ssh://GerritServer:8021/ob
 <script src="/js/schemes/pisces.js"></script>
 
 
-<script src="/js/next-boot.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+<script src="/js/next-boot.js"></script>
 
 
 
