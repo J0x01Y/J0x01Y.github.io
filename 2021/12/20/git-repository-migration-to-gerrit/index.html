@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 6.0.0">
+<meta name="generator" content="Hexo 5.4.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -61,7 +61,7 @@
 <meta property="og:image" content="https://j0x01y.github.io/2021/12/20/git-repository-migration-to-gerrit/GerritForgeIdentity.png">
 <meta property="og:image" content="https://j0x01y.github.io/2021/12/20/git-repository-migration-to-gerrit/GerritCreatRef.png">
 <meta property="article:published_time" content="2021-12-20T04:56:49.000Z">
-<meta property="article:modified_time" content="2022-01-11T08:04:46.000Z">
+<meta property="article:modified_time" content="2022-01-11T08:23:40.533Z">
 <meta property="article:author" content="J1Y">
 <meta property="article:tag" content="git">
 <meta property="article:tag" content="gerrit">
@@ -222,7 +222,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2022-01-11 16:04:46" itemprop="dateModified" datetime="2022-01-11T16:04:46+08:00">2022-01-11</time>
+                <time title="修改時間：2022-01-11 16:23:40" itemprop="dateModified" datetime="2022-01-11T16:23:40+08:00">2022-01-11</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -279,7 +279,7 @@ remote: Contact an administrator to fix the permissions
 <h5 id="remote-rejected-v0-6-1-gt-v0-6-1-prohibited-by-Gerrit-update-for-creating-new-commit-object-not-permitted"><a href="#remote-rejected-v0-6-1-gt-v0-6-1-prohibited-by-Gerrit-update-for-creating-new-commit-object-not-permitted" class="headerlink" title="! [remote rejected]     v0.6.1 -&gt; v0.6.1 (prohibited by Gerrit: update for creating new commit object not permitted)"></a><code>! [remote rejected]     v0.6.1 -&gt; v0.6.1 (prohibited by Gerrit: update for creating new commit object not permitted)</code></h5><p>這個我就不知道出現的原因, 唯有這個tag沒辦法推上去. 我又額外開啟兩個權限之後就一切正常<br><code>Allow Create Reference</code><br><code>Allow Push with or without force</code></p>
 <p><img src="/2021/12/20/git-repository-migration-to-gerrit/GerritCreatRef.png" alt="GerritCreatRef"></p>
 <p>修改完以上設定後終於可以完整鏡像repo…完結撒花～</p>
-<pre class="command-line" data-host="localhost" data-output="2-100" data-user="J1Y"><code class="language-bash">$ git push --mirror gerrit
+<pre class="command-line" data-host="localhost" data-output="2-100" data-user="J1Y"><code class="language-bash">git push --mirror gerrit
 Enumerating objects: 190731, done.
 Counting objects: 100% (190731/190731), done.
 Delta compression using up to 64 threads
@@ -373,8 +373,8 @@ To ssh://GerritServer:8021/ob
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
-                <a href="/2022/01/05/ob-eeprom-fru/" rel="prev" title="ob eeprom fru">
-                  ob eeprom fru <i class="fa fa-chevron-right"></i>
+                <a href="/2022/01/11/ob-eeprom-fru/" rel="prev" title="FRU EEPROM在OpenBmc的實作方式">
+                  FRU EEPROM在OpenBmc的實作方式 <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>
@@ -437,13 +437,13 @@ To ssh://GerritServer:8021/ob
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-count">2</span>
         <span class="site-state-item-name">分類</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>
@@ -479,7 +479,7 @@ To ssh://GerritServer:8021/ob
   </span>
   <span class="author" itemprop="copyrightHolder">J1Y</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 強力驅動 v6.0.0
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 強力驅動 v5.4.0
   </div>
   <span class="post-meta-divider">|</span>
   <div class="theme-info">主題 – <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.5.0
@@ -536,6 +536,19 @@ To ssh://GerritServer:8021/ob
 
 
 
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme: 'forest',
+      logLevel: 3,
+      flowchart: { curve: 'linear' },
+      gantt: { axisFormat: '%m/%d/%Y' },
+      sequence: { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
 
 
 
