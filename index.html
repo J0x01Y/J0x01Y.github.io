@@ -185,6 +185,97 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://j0x01y.github.io/2022/01/19/ob-and-d-feet/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="J1Y">
+      <meta itemprop="description" content="x86 BIOS/ Yocto Project/ Embedded Linux/ MCU/ STM32">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="J1Y工作筆記">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/01/19/ob-and-d-feet/" class="post-title-link" itemprop="url">openbmc使用D-Feet debug d-bus</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2022-01-19 13:17:42" itemprop="dateCreated datePublished" datetime="2022-01-19T13:17:42+08:00">2022-01-19</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2022-01-20 11:07:00" itemprop="dateModified" datetime="2022-01-20T11:07:00+08:00">2022-01-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/OpenBmc/" itemprop="url" rel="index">
+                    <span itemprop="name">OpenBmc</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h4 id="BMC端"><a href="#BMC端" class="headerlink" title="BMC端"></a>BMC端</h4><ul>
+<li>透過socat將system_bus_socket從port 7272丟出去<pre class="command-line" data-host="ob" data-output="2-100" data-user="root"><code class="language-bash">socat TCP-LISTEN:7272,reuseaddr,fork UNIX-CONNECT:/run/dbus/system_bus_socket</code>
+</pre></li>
+</ul>
+<h4 id="監控端"><a href="#監控端" class="headerlink" title="監控端"></a>監控端</h4><ul>
+<li>建立dbus file<pre class="command-line" data-host="localhost" data-output data-user="J1Y"><code class="language-bash">touch /tmp/dbus</code></pre></li>
+<li>建立socat通道<pre class="command-line" data-host="localhost" data-output data-user="J1Y"><code class="language-bash">sudo socat ABSTRACT-LISTEN:/tmp/dbus,fork TCP:192.168.0.4:7272</code></pre></li>
+<li>開啟D-Feet<pre class="command-line" data-host="localhost" data-output data-user="J1Y"><code class="language-bash">sudo d-feet</code></pre></li>
+<li>開啟d-feet連接前面建立的/tmp/dbus,<br><img src="/2022/01/19/ob-and-d-feet/dfeet_image1.png" alt="image"><br>Address填入unix:abstract=<code>/tmp/dbus</code><br><img src="/2022/01/19/ob-and-d-feet/dfeet_image2.png" alt="image"></li>
+<li>讀取Properties<br>讀取Inverntory.Manager properties<br><img src="/2022/01/19/ob-and-d-feet/dfeet_image3.png" alt="image"></li>
+<li>設定Properties<br>修改MACAddress -&gt;<br><code>&quot;xyz.openbmc_project.Inventory.Item.NetworkInterface&quot;, &quot;MACAddress&quot;, GLib.Variant(&quot;s&quot;, &quot;E0:20:20:01:10:01&quot;)</code><br><img src="/2022/01/19/ob-and-d-feet/dfeet_image4.png" alt="image"><br>設定後再讀取就會看到已被設定<br><img src="/2022/01/19/ob-and-d-feet/dfeet_image5.png" alt="image"></li>
+</ul>
+<h4 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h4><ul>
+<li><a href="https://wjs890204.tistory.com/1844">[D-Bus] D-Feet with socat for remote device</a></li>
+<li><a href="https://stackoverflow.com/questions/16741057/d-bus-d-feet-send-dictionary-of-string-variants-in-python-syntax">D-Bus D-Feet Send Dictionary of String,Variants in Python Syntax</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-TW">
     <link itemprop="mainEntityOfPage" href="https://j0x01y.github.io/2022/01/11/ob-eeprom-fru/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -216,7 +307,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2022-01-19 10:23:02" itemprop="dateModified" datetime="2022-01-19T10:23:02+08:00">2022-01-19</time>
+                <time title="修改時間：2022-01-19 10:41:18" itemprop="dateModified" datetime="2022-01-19T10:41:18+08:00">2022-01-19</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -741,43 +832,48 @@ Jan 13 10:10:59 ob systemd[1]: obmc-read-eeprom@system-chassis-motherboard.servi
 Jan 13 10:10:59 ob systemd[1]: Finished Read system/chassis/motherboard EEPROM.</code>
 </pre>
 
-
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ul>
+<li><p><a href="https://www.intel.com/content/dam/www/public/us/en/documents/product-briefs/platform-management-fru-document-rev-1-2-feb-2013.pdf">Platform Management FRU Information Storage Definition</a></p>
+</li>
+<li><p><a href="https://github.com/openbmc/ipmi-fru-parser/blob/c19c054c01b7a42c24cdf38a270b33f56290abf3/scripts/example.yaml">Phosphor fru yaml example</a></p>
 <!-- 
 <pre class="mermaid">classDiagram
 
-    EEPROM <.. phosphor_ipmi_fru
-    phosphor_ipmi_fru <|.. InventoryManager
-    phosphor_ipmi_fru <-- Ipmid 
-    InventoryManager <|.. Ipmid
-    InventoryManager <|.. REST_API
-    InventoryManager <|.. Redfish
-    class EEPROM{
-        -uint8_t data[]
-        +read()
-        +write()
-    }
-    class phosphor_ipmi_fru{
-        -Chassis InfoData
-        -Board InfoData
-        -Product InfoData
-        +exporInverntory()
-        +ipmiStorageWriteFruData()
-    }
-    class InventoryManager{
-        +path xyz.openbmc_project.Inventory
-        +GetAll()
-    }
-    class REST_API{
-        +getInventory()
-    }
-    class Redfish{
-        +getInventory()
-    }
-    class Ipmid{
-        +getFruData()
-        +setFruData()
-    }</pre>
--->
+  EEPROM <.. phosphor_ipmi_fru
+  phosphor_ipmi_fru <|.. InventoryManager
+  phosphor_ipmi_fru <-- Ipmid 
+  InventoryManager <|.. Ipmid
+  InventoryManager <|.. REST_API
+  InventoryManager <|.. Redfish
+  class EEPROM{
+      -uint8_t data[]
+      +read()
+      +write()
+  }
+  class phosphor_ipmi_fru{
+      -Chassis InfoData
+      -Board InfoData
+      -Product InfoData
+      +exporInverntory()
+      +ipmiStorageWriteFruData()
+  }
+  class InventoryManager{
+      +path xyz.openbmc_project.Inventory
+      +GetAll()
+  }
+  class REST_API{
+      +getInventory()
+  }
+  class Redfish{
+      +getInventory()
+  }
+  class Ipmid{
+      +getFruData()
+      +setFruData()
+  }</pre></li>
+</ul>
+<p>–&gt;</p>
+--></li></ul>
       
     </div>
 
@@ -1084,7 +1180,7 @@ To ssh://GerritServer:8021/ob
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-count">4</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
@@ -1097,7 +1193,7 @@ To ssh://GerritServer:8021/ob
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>

@@ -60,7 +60,7 @@
 <meta property="og:locale" content="zh_TW">
 <meta property="og:image" content="https://mermaid.ink/img/eyJjb2RlIjoiY2xhc3NEaWFncmFtXG5cbiAgICBFRVBST00gPC4uIHBob3NwaG9yX2lwbWlfZnJ1XG4gICAgcGhvc3Bob3JfaXBtaV9mcnUgby4uIEludmVudG9yeU1hbmFnZXJcbiAgICBwaG9zcGhvcl9pcG1pX2ZydSA8LS0gSXBtaWQgXG4gICAgSW52ZW50b3J5TWFuYWdlciA8fC4uIElwbWlkXG4gICAgSW52ZW50b3J5TWFuYWdlciA8fC4uIFJFU1RfQVBJXG4gICAgSW52ZW50b3J5TWFuYWdlciA8fC4uIFJlZGZpc2hcbiAgICBjbGFzcyBFRVBST017XG4gICAgICAgIC11aW50OF90IGRhdGFbXVxuICAgICAgICArcmVhZCgpXG4gICAgICAgICt3cml0ZSgpXG4gICAgfVxuICAgIGNsYXNzIHBob3NwaG9yX2lwbWlfZnJ1e1xuICAgICAgICAtQ2hhc3NpcyBBcmVhRGF0YVxuICAgICAgICAtQm9hcmQgQXJlYURhdGFcbiAgICAgICAgLVByb2R1Y3QgQXJlYURhdGFcbiAgICAgICAgK2V4cG9ySW52ZXJudG9yeSgpXG4gICAgICAgICtpcG1pU3RvcmFnZVdyaXRlRnJ1RGF0YSgpXG4gICAgfVxuICAgIGNsYXNzIEludmVudG9yeU1hbmFnZXJ7XG4gICAgICAgICtwYXRoIHh5ei5vcGVuYm1jX3Byb2plY3QuSW52ZW50b3J5XG4gICAgICAgICtHZXRBbGwoKVxuICAgIH1cbiAgICBjbGFzcyBSRVNUX0FQSXtcbiAgICAgICAgK2dldEludmVudG9yeSgpXG4gICAgfVxuICAgIGNsYXNzIFJlZGZpc2h7XG4gICAgICAgICtnZXRJbnZlbnRvcnkoKVxuICAgIH1cbiAgICBjbGFzcyBJcG1pZHtcbiAgICAgICAgK2dldEZydURhdGEoKVxuICAgICAgICArc2V0RnJ1RGF0YSgpXG4gICAgfVxuIiwibWVybWFpZCI6eyJ0aGVtZSI6Im5ldXRyYWwifSwidXBkYXRlRWRpdG9yIjpmYWxzZSwiYXV0b1N5bmMiOnRydWUsInVwZGF0ZURpYWdyYW0iOmZhbHNlfQ">
 <meta property="article:published_time" content="2022-01-11T08:29:26.000Z">
-<meta property="article:modified_time" content="2022-01-19T02:23:02.586Z">
+<meta property="article:modified_time" content="2022-01-19T02:41:18.714Z">
 <meta property="article:author" content="J1Y">
 <meta property="article:tag" content="OpenBmc">
 <meta property="article:tag" content="FRU">
@@ -222,7 +222,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2022-01-19 10:23:02" itemprop="dateModified" datetime="2022-01-19T10:23:02+08:00">2022-01-19</time>
+                <time title="修改時間：2022-01-19 10:41:18" itemprop="dateModified" datetime="2022-01-19T10:41:18+08:00">2022-01-19</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -747,43 +747,48 @@ Jan 13 10:10:59 ob systemd[1]: obmc-read-eeprom@system-chassis-motherboard.servi
 Jan 13 10:10:59 ob systemd[1]: Finished Read system/chassis/motherboard EEPROM.</code>
 </pre>
 
-
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ul>
+<li><p><a href="https://www.intel.com/content/dam/www/public/us/en/documents/product-briefs/platform-management-fru-document-rev-1-2-feb-2013.pdf">Platform Management FRU Information Storage Definition</a></p>
+</li>
+<li><p><a href="https://github.com/openbmc/ipmi-fru-parser/blob/c19c054c01b7a42c24cdf38a270b33f56290abf3/scripts/example.yaml">Phosphor fru yaml example</a></p>
 <!-- 
 <pre class="mermaid">classDiagram
 
-    EEPROM <.. phosphor_ipmi_fru
-    phosphor_ipmi_fru <|.. InventoryManager
-    phosphor_ipmi_fru <-- Ipmid 
-    InventoryManager <|.. Ipmid
-    InventoryManager <|.. REST_API
-    InventoryManager <|.. Redfish
-    class EEPROM{
-        -uint8_t data[]
-        +read()
-        +write()
-    }
-    class phosphor_ipmi_fru{
-        -Chassis InfoData
-        -Board InfoData
-        -Product InfoData
-        +exporInverntory()
-        +ipmiStorageWriteFruData()
-    }
-    class InventoryManager{
-        +path xyz.openbmc_project.Inventory
-        +GetAll()
-    }
-    class REST_API{
-        +getInventory()
-    }
-    class Redfish{
-        +getInventory()
-    }
-    class Ipmid{
-        +getFruData()
-        +setFruData()
-    }</pre>
--->
+  EEPROM <.. phosphor_ipmi_fru
+  phosphor_ipmi_fru <|.. InventoryManager
+  phosphor_ipmi_fru <-- Ipmid 
+  InventoryManager <|.. Ipmid
+  InventoryManager <|.. REST_API
+  InventoryManager <|.. Redfish
+  class EEPROM{
+      -uint8_t data[]
+      +read()
+      +write()
+  }
+  class phosphor_ipmi_fru{
+      -Chassis InfoData
+      -Board InfoData
+      -Product InfoData
+      +exporInverntory()
+      +ipmiStorageWriteFruData()
+  }
+  class InventoryManager{
+      +path xyz.openbmc_project.Inventory
+      +GetAll()
+  }
+  class REST_API{
+      +getInventory()
+  }
+  class Redfish{
+      +getInventory()
+  }
+  class Ipmid{
+      +getFruData()
+      +setFruData()
+  }</pre></li>
+</ul>
+<p>–&gt;</p>
+--></li></ul>
     </div>
 
     
@@ -810,6 +815,9 @@ Jan 13 10:10:59 ob systemd[1]: Finished Read system/chassis/motherboard EEPROM.<
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
+                <a href="/2022/01/19/ob-and-d-feet/" rel="prev" title="openbmc使用D-Feet debug d-bus">
+                  openbmc使用D-Feet debug d-bus <i class="fa fa-chevron-right"></i>
+                </a>
             </div>
           </div>
       </footer>
@@ -848,7 +856,7 @@ Jan 13 10:10:59 ob systemd[1]: Finished Read system/chassis/motherboard EEPROM.<
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#What-is-FRU-Field-Replaceable-Unit-Information-Device"><span class="nav-number">1.</span> <span class="nav-text">What is FRU (Field Replaceable Unit) Information Device</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#phosphor-ipmi-fru"><span class="nav-number">2.</span> <span class="nav-text">phosphor-ipmi-fru</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#misc-amp-debug"><span class="nav-number">3.</span> <span class="nav-text">misc &amp; debug</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#What-is-FRU-Field-Replaceable-Unit-Information-Device"><span class="nav-number">1.</span> <span class="nav-text">What is FRU (Field Replaceable Unit) Information Device</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#phosphor-ipmi-fru"><span class="nav-number">2.</span> <span class="nav-text">phosphor-ipmi-fru</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#misc-amp-debug"><span class="nav-number">3.</span> <span class="nav-text">misc &amp; debug</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Reference"><span class="nav-number">4.</span> <span class="nav-text">Reference</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -864,7 +872,7 @@ Jan 13 10:10:59 ob systemd[1]: Finished Read system/chassis/motherboard EEPROM.<
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-count">4</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
@@ -877,7 +885,7 @@ Jan 13 10:10:59 ob systemd[1]: Finished Read system/chassis/motherboard EEPROM.<
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">標籤</span></a>
       </div>
   </nav>
