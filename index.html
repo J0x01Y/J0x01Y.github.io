@@ -216,7 +216,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2022-01-20 11:07:00" itemprop="dateModified" datetime="2022-01-20T11:07:00+08:00">2022-01-20</time>
+                <time title="修改時間：2022-01-20 11:42:26" itemprop="dateModified" datetime="2022-01-20T11:42:26+08:00">2022-01-20</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -249,9 +249,9 @@
 <li>建立dbus file<pre class="command-line" data-host="localhost" data-output data-user="J1Y"><code class="language-bash">touch /tmp/dbus</code></pre></li>
 <li>建立socat通道<pre class="command-line" data-host="localhost" data-output data-user="J1Y"><code class="language-bash">sudo socat ABSTRACT-LISTEN:/tmp/dbus,fork TCP:192.168.0.4:7272</code></pre></li>
 <li>開啟D-Feet<pre class="command-line" data-host="localhost" data-output data-user="J1Y"><code class="language-bash">sudo d-feet</code></pre></li>
-<li>開啟d-feet連接前面建立的/tmp/dbus,<br><img src="/2022/01/19/ob-and-d-feet/01/19/ob-and-d-feet/dfeet_image1.png" alt="image"><br>Address填入unix:abstract=<code>/tmp/dbus</code><br><img src="/2022/01/19/ob-and-d-feet/01/19/ob-and-d-feet/dfeet_image2.png" alt="image"></li>
-<li>讀取Properties<br>讀取Inverntory.Manager properties<br><img src="/2022/01/19/ob-and-d-feet/01/19/ob-and-d-feet/dfeet_image3.png" alt="image"></li>
-<li>設定Properties<br>修改MACAddress -&gt;<br><code>&quot;xyz.openbmc_project.Inventory.Item.NetworkInterface&quot;, &quot;MACAddress&quot;, GLib.Variant(&quot;s&quot;, &quot;E0:20:20:01:10:01&quot;)</code><br><img src="/2022/01/19/ob-and-d-feet/01/19/ob-and-d-feet/dfeet_image4.png" alt="image"><br>設定後再讀取就會看到已被設定<br><img src="/2022/01/19/ob-and-d-feet/01/19/ob-and-d-feet/dfeet_image5.png" alt="image"></li>
+<li>開啟d-feet連接前面建立的/tmp/dbus,<br><img src="/2022/01/19/ob-and-d-feet/dfeet_image1.png" alt="image"><br>Address填入unix:abstract=<code>/tmp/dbus</code><br><img src="/2022/01/19/ob-and-d-feet/dfeet_image2.png" alt="image"></li>
+<li>讀取Properties<br>讀取Inverntory.Manager properties<br><img src="/2022/01/19/ob-and-d-feet/dfeet_image3.png" alt="image"></li>
+<li>設定Properties<br>修改MACAddress -&gt;<br><code>&quot;xyz.openbmc_project.Inventory.Item.NetworkInterface&quot;, &quot;MACAddress&quot;, GLib.Variant(&quot;s&quot;, &quot;E0:20:20:01:10:01&quot;)</code><br><img src="/2022/01/19/ob-and-d-feet/dfeet_image4.png" alt="image"><br>設定後再讀取就會看到已被設定<br><img src="/2022/01/19/ob-and-d-feet/dfeet_image5.png" alt="image"></li>
 </ul>
 <h4 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h4><ul>
 <li><a href="https://wjs890204.tistory.com/1844">[D-Bus] D-Feet with socat for remote device</a></li>
