@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"j0x01y.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="x86 BIOS&#x2F; Yocto Project&#x2F; Embedded Linux&#x2F; MCU">
+<meta property="og:type" content="website">
+<meta property="og:title" content="J1Y工作筆記">
+<meta property="og:url" content="https://j0x01y.github.io/index.html">
+<meta property="og:site_name" content="J1Y工作筆記">
+<meta property="og:description" content="x86 BIOS&#x2F; Yocto Project&#x2F; Embedded Linux&#x2F; MCU">
+<meta property="og:locale" content="zh_TW">
+<meta property="article:author" content="J1Y">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://j0x01y.github.io/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : true,
+    isPost : false,
+    lang   : 'zh-TW'
+  };
+</script>
+
+  <title>J1Y工作筆記</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切換導航欄">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">J1Y工作筆記</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">碼農的工作日常紀錄</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首頁</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>歸檔</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content index posts-expand">
+            
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://j0x01y.github.io/2022/01/19/openbmc%E4%BD%BF%E7%94%A8D-Feet-debug-d-bus/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="J1Y">
+      <meta itemprop="description" content="x86 BIOS/ Yocto Project/ Embedded Linux/ MCU">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="J1Y工作筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/01/19/openbmc%E4%BD%BF%E7%94%A8D-Feet-debug-d-bus/" class="post-title-link" itemprop="url">openbmc使用D-Feet debug d-bus</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2022-01-19 05:17:42" itemprop="dateCreated datePublished" datetime="2022-01-19T05:17:42+08:00">2022-01-19</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2025-04-22 12:17:57" itemprop="dateModified" datetime="2025-04-22T12:17:57+08:00">2025-04-22</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/OpenBmc/" itemprop="url" rel="index"><span itemprop="name">OpenBmc</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="BMC端"><a href="#BMC端" class="headerlink" title="BMC端"></a>BMC端</h1><ul>
+<li><p>透過socat將system_bus_socket從port 7272丟出去</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">socat TCP-LISTEN:7272,reuseaddr,fork UNIX-CONNECT:/run/dbus/system_bus_socket</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h1 id="監控端"><a href="#監控端" class="headerlink" title="監控端"></a>監控端</h1><ul>
+<li><p>建立dbus file</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">touch</span> /tmp/dbus</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>建立socat通道</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> socat ABSTRACT-LISTEN:/tmp/dbus,fork TCP:192.168.0.4:7272</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>開啟D-Feet</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> d-feet</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>開啟d-feet連接前面建立的&#x2F;tmp&#x2F;dbus,</p>
+<p><img src="https://j0x01y.github.io/2022/01/19/ob-and-d-feet/dfeet_image1.png" alt="image"></p>
+<p>Address填入<code>unix:abstract=/tmp/dbus</code><br><img src="https://j0x01y.github.io/2022/01/19/ob-and-d-feet/dfeet_image2.png" alt="image"></p>
+</li>
+<li><p>讀取Properties<br>讀取Inverntory.Manager properties<br><img src="https://j0x01y.github.io/2022/01/19/ob-and-d-feet/dfeet_image3.png" alt="image"></p>
+</li>
+<li><p>設定Properties<br>修改MACAddress -&gt;<br><code>&quot;xyz.openbmc_project.Inventory.Item.NetworkInterface&quot;, &quot;MACAddress&quot;, GLib.Variant(&quot;s&quot;, &quot;E0:20:20:01:10:01&quot;)</code><br><img src="https://j0x01y.github.io/2022/01/19/ob-and-d-feet/dfeet_image4.png" alt="image"><br>設定後再讀取就會看到已被設定<br><img src="https://j0x01y.github.io/2022/01/19/ob-and-d-feet/dfeet_image5.png" alt="image"></p>
+</li>
+</ul>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p><a target="_blank" rel="noopener" href="https://wjs890204.tistory.com/1844">[D-Bus] D-Feet with socat for remote device</a><br><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/16741057/d-bus-d-feet-send-dictionary-of-string-variants-in-python-syntax">D-Bus D-Feet Send Dictionary of String,Variants in Python Syntax</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://j0x01y.github.io/2022/01/11/FRU-EEPROM%E5%9C%A8OpenBmc%E7%9A%84%E5%AF%A6%E4%BD%9C%E6%96%B9%E5%BC%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="J1Y">
+      <meta itemprop="description" content="x86 BIOS/ Yocto Project/ Embedded Linux/ MCU">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="J1Y工作筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/01/11/FRU-EEPROM%E5%9C%A8OpenBmc%E7%9A%84%E5%AF%A6%E4%BD%9C%E6%96%B9%E5%BC%8F/" class="post-title-link" itemprop="url">FRU EEPROM在OpenBmc的實作方式</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2022-01-11 08:29:26" itemprop="dateCreated datePublished" datetime="2022-01-11T08:29:26+08:00">2022-01-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2025-04-22 12:09:21" itemprop="dateModified" datetime="2025-04-22T12:09:21+08:00">2025-04-22</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/OpenBmc/" itemprop="url" rel="index"><span itemprop="name">OpenBmc</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="What-is-FRU-Field-Replaceable-Unit-Information-Device"><a href="#What-is-FRU-Field-Replaceable-Unit-Information-Device" class="headerlink" title="What is FRU (Field Replaceable Unit) Information Device"></a>What is FRU (Field Replaceable Unit) Information Device</h1><p>在IPMI規範中是使用FRU儲存 “Inventory” 的資料並且可透過Ipmitool將規範定義的內容讀取並解析, 而FRU Information Device主要是一個實際的EEPROM Chip, 但亦可能是裝置本身就具備FRU的資訊.</p>
+<p>FRU Information Device的規範中已定義通用的格式, 資料存放方式如下表</p>
+<table>
+<thead>
+<tr>
+<th>Size(bytes)</th>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>8</td>
+<td>Common Header</td>
+<td>描述其他區塊的偏移量</td>
+</tr>
+<tr>
+<td>72</td>
+<td>Intternal Use Area</td>
+<td>保留給BMC及主板自定義區塊</td>
+</tr>
+<tr>
+<td>32</td>
+<td>Chassis Info Area</td>
+<td>主機資訊, 其具有唯一性整個系統中只有一個FRU裝置具備這個資訊</td>
+</tr>
+<tr>
+<td>54</td>
+<td>Board Info Area</td>
+<td>主板資訊</td>
+</tr>
+<tr>
+<td>80*</td>
+<td>Product Info Area</td>
+<td>產品資訊</td>
+</tr>
+</tbody></table>
+<p>*規範中建議最少預留80 bytes以上<br>因為各區的起始位址是由Common Header定義故每個區塊的大小可以自行調整, 上述只是規範中建議的空間分配</p>
+<p>Common Header</p>
+<table>
+<thead>
+<tr>
+<th>Byte</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>Common Header Version, 目前只有定義0x01</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Internal Use data offset</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Chassis data offset</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Board data offset</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Product data offset</td>
+</tr>
+<tr>
+<td>5</td>
+<td>MultiRecord data offset</td>
+</tr>
+<tr>
+<td>6</td>
+<td>0x00</td>
+</tr>
+<tr>
+<td>7</td>
+<td>檢查碼</td>
+</tr>
+</tbody></table>
+<p>需要特別注意FRU資料是以8 byte對齊故每個offset的數值還需要乘8才是實際的偏移量</p>
+<p>Chassis Info</p>
+<table>
+<thead>
+<tr>
+<th>Length</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>Format Version</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Area Length</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Chassis Type</td>
+</tr>
+<tr>
+<td>N</td>
+<td>Part Number</td>
+</tr>
+<tr>
+<td>N</td>
+<td>Serial Number</td>
+</tr>
+<tr>
+<td>N</td>
+<td>OEM Define</td>
+</tr>
+<tr>
+<td>N</td>
+<td>0x00 對齊位元</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Checksum</td>
+</tr>
+</tbody></table>
+<p>Board Info</p>
+<table>
+<thead>
+<tr>
+<th>Length</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>Format Version</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Area Length</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Language Code</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Mfg. Data&#x2F; Time, 從1996&#x2F;1&#x2F;1 0:00開始算的多少分鐘</td>
+</tr>
+<tr>
+<td>N</td>
+<td>Maufactuer Name</td>
+</tr>
+<tr>
+<td>N</td>
+<td>Product Name</td>
+</tr>
+<tr>
+<td>N</td>
+<td>Serial Number</td>
+</tr>
+<tr>
+<td>N</td>
+<td>Part Number</td>
+</tr>
+<tr>
+<td>N</td>
+<td>FRU File ID</td>
+</tr>
+<tr>
+<td>N</td>
+<td>OEM Define</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0xC1 代表資料結尾</td>
+</tr>
+<tr>
+<td>N</td>
+<td>0x00 對齊位元</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Checksum</td>
+</tr>
+</tbody></table>
+<p>Product Info</p>
+<table>
+<thead>
+<tr>
+<th>Length</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>Format Version</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Area Length</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Language Code</td>
+</tr>
+<tr>
+<td>N</td>
+<td>Maufactuer Name</td>
+</tr>
+<tr>
+<td>N</td>
+<td>Product Name</td>
+</tr>
+<tr>
+<td>N</td>
+<td>Part&#x2F;Model Number</td>
+</tr>
+<tr>
+<td>N</td>
+<td>Product Version</td>
+</tr>
+<tr>
+<td>N</td>
+<td>Serial Number</td>
+</tr>
+<tr>
+<td>N</td>
+<td>Asset tag</td>
+</tr>
+<tr>
+<td>N</td>
+<td>FRU File ID</td>
+</tr>
+<tr>
+<td>N</td>
+<td>OEM Define</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0xC1 代表資料結尾</td>
+</tr>
+<tr>
+<td>N</td>
+<td>0x00 對齊位元</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Checksum</td>
+</tr>
+</tbody></table>
+<h2 id="phosphor-ipmi-fru"><a href="#phosphor-ipmi-fru" class="headerlink" title="phosphor-ipmi-fru"></a>phosphor-ipmi-fru</h2><p>主要功能是解析EEPROM的資料並依照設定檔的定義將其的更新到Inverntory service, 讓其他Module可以存取FRU的資料<br>Recipe meta-phosphor&#x2F;recipes-phosphor&#x2F;ipmi&#x2F;phosphor-ipmi-fru_git.bb<br>Source <a target="_blank" rel="noopener" href="https://github.com/openbmc/ipmi-fru-parser">ipmi-fru-parser</a></p>
+<pre class="mermaid">classDiagram
+
+    EEPROM <.. phosphor_ipmi_fru
+    phosphor_ipmi_fru o.. InventoryManager
+    phosphor_ipmi_fru <-- Ipmid 
+    InventoryManager <|.. Ipmid
+    InventoryManager <|.. REST_API
+    InventoryManager <|.. Redfish
+    class EEPROM{
+        -uint8_t data[]
+        +read()
+        +write()
+    }
+    class phosphor_ipmi_fru{
+        -Chassis AreaData
+        -Board AreaData
+        -Product AreaData
+        +exporInverntory()
+        +ipmiStorageWriteFruData()
+    }
+    class InventoryManager{
+        +path xyz.openbmc_project.Inventory
+        +GetAll()
+    }
+    class REST_API{
+        +getInventory()
+    }
+    class Redfish{
+        +getInventory()
+    }
+    class Ipmid{
+        +getFruData()
+        +setFruData()
+    }</pre>
+
+<p>需要特別注意的是外部只有Ipmi可以修改fru data, ipmi wetie fru cmd實作是透過phosphor-ipmi-fru提供的libstrgfnhandler.so裡面會註冊Net&#x2F;Cmd &#x3D; 0x0A&#x2F;0x12, 但是只有將傳入的Fru binary更新到Dbus沒有寫回實際的EEPROM, 所以重啟後會看到Inventory會被還原回實際EEPROM的資料.</p>
+<p>而FRU提供的資料只能透過InventoryManager取得映射後的結果, 例如取得FRU board area的資料就需要去system&#x2F;chassis&#x2F;motherboard裡面找, 而與FRU資料定義的關係是透過yaml設定在本文後面會提到</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">busctl introspect xyz.openbmc_project.Inventory.Manager /xyz/openbmc_project/inventory/system/chassis/motherboard</span><br><span class="line">NAME                                                      TYPE      SIGNATURE RESULT/VALUE            FLAGS</span><br><span class="line">org.freedesktop.DBus.Introspectable                       interface -         -                       -</span><br><span class="line">.Introspect                                               method    -         s                       -</span><br><span class="line">org.freedesktop.DBus.Peer                                 interface -         -                       -</span><br><span class="line">.GetMachineId                                             method    -         s                       -</span><br><span class="line">.Ping                                                     method    -         -                       -</span><br><span class="line">org.freedesktop.DBus.Properties                           interface -         -                       -</span><br><span class="line">.Get                                                      method    ss        v                       -</span><br><span class="line">.GetAll                                                   method    s         a&#123;sv&#125;                   -</span><br><span class="line">.Set                                                      method    ssv       -                       -</span><br><span class="line">.PropertiesChanged                                        signal    sa&#123;sv&#125;as  -                       -</span><br><span class="line">xyz.openbmc_project.Inventory.Decorator.Asset             interface -         -                       -</span><br><span class="line">.BuildDate                                                property  s         <span class="string">&quot;2022-01-18 - 07:54:00&quot;</span> emits-change writable</span><br><span class="line">.Manufacturer                                             property  s         <span class="string">&quot;AsusTek&quot;</span>               emits-change writable</span><br><span class="line">.Model                                                    property  s         <span class="string">&quot;&quot;</span>                      emits-change writable</span><br><span class="line">.PartNumber                                               property  s         <span class="string">&quot;evb-01&quot;</span>                emits-change writable</span><br><span class="line">.SerialNumber                                             property  s         <span class="string">&quot;Sn.1001&quot;</span>               emits-change writable</span><br><span class="line">.SparePartNumber                                          property  s         <span class="string">&quot;&quot;</span>                      emits-change writable</span><br><span class="line">.SubModel                                                 property  s         <span class="string">&quot;&quot;</span>                      emits-change writable</span><br><span class="line">xyz.openbmc_project.Inventory.Decorator.Cacheable         interface -         -                       -</span><br><span class="line">.Cached                                                   property  b         <span class="literal">true</span>                    emits-change writable</span><br><span class="line">xyz.openbmc_project.Inventory.Decorator.Replaceable       interface -         -                       -</span><br><span class="line">.FieldReplaceable                                         property  b         <span class="literal">true</span>                    emits-change writable</span><br><span class="line">xyz.openbmc_project.Inventory.Item                        interface -         -                       -</span><br><span class="line">.Present                                                  property  b         <span class="literal">true</span>                    emits-change writable</span><br><span class="line">.PrettyName                                               property  s         <span class="string">&quot;evb&quot;</span>                   emits-change writable</span><br></pre></td></tr></table></figure>
+
+<p>支援Chassis&#x2F; Board&#x2F; Prodcut這三種FRU的資料解析, 並且Chassis &amp; Board裡OEM定義僅支援8組<br>在設定檔的<code>IPMIFruProperty</code>參數定義如下,</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;Type&quot;</span>,           <span class="comment">/*OPENBMC_VPD_KEY_CHASSIS_TYPE*/</span></span><br><span class="line"><span class="string">&quot;Part Number&quot;</span>,    <span class="comment">/*OPENBMC_VPD_KEY_CHASSIS_PART_NUM,*/</span></span><br><span class="line"><span class="string">&quot;Serial Number&quot;</span>,  <span class="comment">/*OPENBMC_VPD_KEY_CHASSIS_SERIAL_NUM,*/</span></span><br><span class="line"><span class="string">&quot;Custom Field 1&quot;</span>, <span class="comment">/*OPENBMC_VPD_KEY_CHASSIS_CUSTOM1,*/</span></span><br><span class="line"><span class="string">&quot;Custom Field 2&quot;</span>, <span class="comment">/*OPENBMC_VPD_KEY_CHASSIS_CUSTOM2,*/</span></span><br><span class="line"><span class="string">&quot;Custom Field 3&quot;</span>, <span class="comment">/*OPENBMC_VPD_KEY_CHASSIS_CUSTOM3,*/</span></span><br><span class="line"><span class="string">&quot;Custom Field 4&quot;</span>, <span class="comment">/*OPENBMC_VPD_KEY_CHASSIS_CUSTOM4,*/</span></span><br><span class="line"><span class="string">&quot;Custom Field 5&quot;</span>, <span class="comment">/*OPENBMC_VPD_KEY_CHASSIS_CUSTOM5,*/</span></span><br><span class="line"><span class="string">&quot;Custom Field 6&quot;</span>, <span class="comment">/*OPENBMC_VPD_KEY_CHASSIS_CUSTOM6,*/</span></span><br><span class="line"><span class="string">&quot;Custom Field 7&quot;</span>, <span class="comment">/*OPENBMC_VPD_KEY_CHASSIS_CUSTOM7,*/</span></span><br><span class="line"><span class="string">&quot;Custom Field 8&quot;</span>, <span class="comment">/*OPENBMC_VPD_KEY_CHASSIS_CUSTOM8,*/</span></span><br><span class="line"></span><br><span class="line"><span class="string">&quot;Mfg Date&quot;</span>,       <span class="comment">/* OPENBMC_VPD_KEY_BOARD_MFG_DATE, */</span> <span class="comment">/* not a type/len */</span></span><br><span class="line"><span class="string">&quot;Manufacturer&quot;</span>,                       <span class="comment">/* OPENBMC_VPD_KEY_BOARD_MFR, */</span></span><br><span class="line"><span class="string">&quot;Name&quot;</span>,                               <span class="comment">/* OPENBMC_VPD_KEY_BOARD_NAME, */</span></span><br><span class="line"><span class="string">&quot;Serial Number&quot;</span>,  <span class="comment">/* OPENBMC_VPD_KEY_BOARD_SERIAL_NUM, */</span></span><br><span class="line"><span class="string">&quot;Part Number&quot;</span>,    <span class="comment">/* OPENBMC_VPD_KEY_BOARD_PART_NUM, */</span></span><br><span class="line"><span class="string">&quot;FRU File ID&quot;</span>,    <span class="comment">/* OPENBMC_VPD_KEY_BOARD_FRU_FILE_ID, */</span></span><br><span class="line"><span class="string">&quot;Custom Field 1&quot;</span>, <span class="comment">/*OPENBMC_VPD_KEY_BOARD_CUSTOM1,*/</span></span><br><span class="line"><span class="string">&quot;Custom Field 2&quot;</span>, <span class="comment">/*OPENBMC_VPD_KEY_BOARD_CUSTOM2,*/</span></span><br><span class="line"><span class="string">&quot;Custom Field 3&quot;</span>, <span class="comment">/*OPENBMC_VPD_KEY_BOARD_CUSTOM3,*/</span></span><br><span class="line"><span class="string">&quot;Custom Field 4&quot;</span>, <span class="comment">/*OPENBMC_VPD_KEY_BOARD_CUSTOM4,*/</span></span><br><span class="line"><span class="string">&quot;Custom Field 5&quot;</span>, <span class="comment">/*OPENBMC_VPD_KEY_BOARD_CUSTOM5,*/</span></span><br><span class="line"><span class="string">&quot;Custom Field 6&quot;</span>, <span class="comment">/*OPENBMC_VPD_KEY_BOARD_CUSTOM6,*/</span></span><br><span class="line"><span class="string">&quot;Custom Field 7&quot;</span>, <span class="comment">/*OPENBMC_VPD_KEY_BOARD_CUSTOM7,*/</span></span><br><span class="line"><span class="string">&quot;Custom Field 8&quot;</span>, <span class="comment">/*OPENBMC_VPD_KEY_BOARD_CUSTOM8,*/</span></span><br><span class="line"></span><br><span class="line"><span class="string">&quot;Manufacturer&quot;</span>,   <span class="comment">/* OPENBMC_VPD_KEY_PRODUCT_MFR, */</span></span><br><span class="line"><span class="string">&quot;Name&quot;</span>,           <span class="comment">/* OPENBMC_VPD_KEY_PRODUCT_NAME, */</span></span><br><span class="line"><span class="string">&quot;Model Number&quot;</span>,   <span class="comment">/* OPENBMC_VPD_KEY_PRODUCT_PART_MODEL_NUM, */</span></span><br><span class="line"><span class="string">&quot;Version&quot;</span>,        <span class="comment">/* OPENBMC_VPD_KEY_PRODUCT_VER, */</span></span><br><span class="line"><span class="string">&quot;Serial Number&quot;</span>,  <span class="comment">/* OPENBMC_VPD_KEY_PRODUCT_SERIAL_NUM, */</span></span><br><span class="line"><span class="string">&quot;Asset Tag&quot;</span>,      <span class="comment">/* OPENBMC_VPD_KEY_PRODUCT_ASSET_TAG, */</span></span><br><span class="line"><span class="string">&quot;FRU File ID&quot;</span>,    <span class="comment">/* OPENBMC_VPD_KEY_PRODUCT_FRU_FILE_ID, */</span></span><br><span class="line"><span class="string">&quot;Custom Field 1&quot;</span>, <span class="comment">/*OPENBMC_VPD_KEY_PRODUCT_CUSTOM1,*/</span></span><br><span class="line"><span class="string">&quot;Custom Field 2&quot;</span>, <span class="comment">/*OPENBMC_VPD_KEY_PRODUCT_CUSTOM2,*/</span></span><br><span class="line"><span class="string">&quot;Custom Field 3&quot;</span>, <span class="comment">/*OPENBMC_VPD_KEY_PRODUCT_CUSTOM3,*/</span></span><br><span class="line"><span class="string">&quot;Custom Field 4&quot;</span>, <span class="comment">/*OPENBMC_VPD_KEY_PRODUCT_CUSTOM4,*/</span></span><br><span class="line"><span class="string">&quot;Custom Field 5&quot;</span>, <span class="comment">/*OPENBMC_VPD_KEY_PRODUCT_CUSTOM5,*/</span></span><br><span class="line"><span class="string">&quot;Custom Field 6&quot;</span>, <span class="comment">/*OPENBMC_VPD_KEY_PRODUCT_CUSTOM6,*/</span></span><br><span class="line"><span class="string">&quot;Custom Field 7&quot;</span>, <span class="comment">/*OPENBMC_VPD_KEY_PRODUCT_CUSTOM7,*/</span></span><br><span class="line"><span class="string">&quot;Custom Field 8&quot;</span>, <span class="comment">/*OPENBMC_VPD_KEY_PRODUCT_CUSTOM8,*/</span></span><br></pre></td></tr></table></figure>
+
+<p>描述FRU的設定檔是透過YAML_GEN傳入檔案路徑</p>
+<p>phosphor-ipmi-fru_git.bb</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">EXTRA_OECONF = &quot; \</span><br><span class="line">             YAML_GEN=$&#123;STAGING_DIR_NATIVE&#125;$&#123;config_datadir&#125;/config.yaml \</span><br><span class="line">             PROP_YAML=$&#123;STAGING_DIR_NATIVE&#125;$&#123;properties_datadir&#125;/extra-properties.yaml \</span><br><span class="line">             &quot;</span><br></pre></td></tr></table></figure>
+
+<p>YAML_GEN檔案的格式</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># This YAML could help generate C++ code.</span></span><br><span class="line"><span class="comment"># Format of the YAML:</span></span><br><span class="line"><span class="attr">Fruid:</span></span><br><span class="line">  <span class="string">Associated</span> <span class="string">Fru</span> <span class="string">paths</span></span><br><span class="line">    <span class="string">d-bus</span> <span class="string">Interfaces</span></span><br><span class="line">      <span class="string">d-bus</span> <span class="string">Properties</span></span><br><span class="line">        <span class="string">IPMI</span> <span class="string">Fru</span> <span class="string">mapping</span></span><br></pre></td></tr></table></figure>
+
+<p>實際的範例如下, 需要確認Fruid有選到正確的裝置<br><code>IPMIFruSection</code>現有的參數是Chassis&#x2F; Board&#x2F; Product分別對應FRU的Area定義</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">0x00:</span></span><br><span class="line">  <span class="string">/system/chassis/motherboard:</span></span><br><span class="line">    <span class="attr">entityID:</span> <span class="number">7</span></span><br><span class="line">    <span class="attr">entityInstance:</span> <span class="number">1</span></span><br><span class="line">    <span class="attr">interfaces:</span></span><br><span class="line">      <span class="attr">xyz.openbmc_project.Inventory.Decorator.Asset:</span></span><br><span class="line">        <span class="attr">BuildDate:</span></span><br><span class="line">          <span class="attr">IPMIFruProperty:</span> <span class="string">Mfg</span> <span class="string">Date</span></span><br><span class="line">          <span class="attr">IPMIFruSection:</span> <span class="string">Board</span></span><br><span class="line">        <span class="attr">PartNumber:</span></span><br><span class="line">          <span class="attr">IPMIFruProperty:</span> <span class="string">Part</span> <span class="string">Number</span></span><br><span class="line">          <span class="attr">IPMIFruSection:</span> <span class="string">Board</span></span><br><span class="line">        <span class="attr">Manufacturer:</span></span><br><span class="line">          <span class="attr">IPMIFruProperty:</span> <span class="string">Manufacturer</span></span><br><span class="line">          <span class="attr">IPMIFruSection:</span> <span class="string">Board</span></span><br><span class="line">        <span class="attr">SerialNumber:</span></span><br><span class="line">          <span class="attr">IPMIFruProperty:</span> <span class="string">Serial</span> <span class="string">Number</span></span><br><span class="line">          <span class="attr">IPMIFruSection:</span> <span class="string">Board</span></span><br><span class="line">      <span class="attr">xyz.openbmc_project.Inventory.Item:</span></span><br><span class="line">        <span class="attr">PrettyName:</span></span><br><span class="line">          <span class="attr">IPMIFruProperty:</span> <span class="string">Name</span></span><br><span class="line">          <span class="attr">IPMIFruSection:</span> <span class="string">Board</span></span><br><span class="line">  <span class="string">/system/chassis:</span></span><br><span class="line">    <span class="attr">entityID:</span> <span class="number">23</span></span><br><span class="line">    <span class="attr">entityInstance:</span> <span class="number">1</span></span><br><span class="line">    <span class="attr">interfaces:</span></span><br><span class="line">      <span class="attr">xyz.openbmc_project.Inventory.Decorator.Asset:</span></span><br><span class="line">        <span class="attr">SerialNumber:</span></span><br><span class="line">          <span class="attr">IPMIFruProperty:</span> <span class="string">Serial</span> <span class="string">Number</span></span><br><span class="line">          <span class="attr">IPMIFruSection:</span> <span class="string">Chassis</span></span><br><span class="line">        <span class="attr">PartNumber:</span></span><br><span class="line">          <span class="attr">IPMIFruProperty:</span> <span class="string">Part</span> <span class="string">Number</span></span><br><span class="line">          <span class="attr">IPMIFruSection:</span> <span class="string">Chassis</span></span><br><span class="line">        <span class="attr">Model:</span></span><br><span class="line">          <span class="attr">IPMIFruProperty:</span> <span class="string">Type</span></span><br><span class="line">          <span class="attr">IPMIFruSection:</span> <span class="string">Chassis</span></span><br><span class="line">      <span class="attr">xyz.openbmc_project.Inventory.Decorator.VendorInformation:</span></span><br><span class="line">        <span class="attr">CustomField2:</span></span><br><span class="line">          <span class="attr">IPMIFruProperty:</span> <span class="string">Custom</span> <span class="string">Field</span> <span class="number">1</span></span><br><span class="line">          <span class="attr">IPMIFruSection:</span> <span class="string">Chassis</span></span><br><span class="line">  <span class="string">/system/bmc:</span></span><br><span class="line">    <span class="attr">entityID:</span> <span class="number">23</span></span><br><span class="line">    <span class="attr">entityInstance:</span> <span class="number">1</span></span><br><span class="line">    <span class="attr">interfaces:</span></span><br><span class="line">      <span class="attr">xyz.openbmc_project.Inventory.Decorator.Asset:</span></span><br><span class="line">        <span class="attr">PartNumber:</span></span><br><span class="line">          <span class="attr">IPMIFruProperty:</span> <span class="string">System</span> <span class="string">Name</span></span><br><span class="line">          <span class="attr">IPMIFruSection:</span> <span class="string">MultiRecord</span></span><br><span class="line">        <span class="attr">Manufacturer:</span></span><br><span class="line">          <span class="attr">IPMIFruProperty:</span> <span class="string">Manufacturer</span></span><br><span class="line">          <span class="attr">IPMIFruSection:</span> <span class="string">Product</span></span><br><span class="line">      <span class="attr">xyz.openbmc_project.Common.UUID:</span></span><br><span class="line">        <span class="attr">UUID:</span></span><br><span class="line">          <span class="attr">IPMIFruProperty:</span> <span class="string">System</span> <span class="string">Unique</span> <span class="string">ID</span></span><br><span class="line">          <span class="attr">IPMIFruSection:</span> <span class="string">MultiRecord</span></span><br><span class="line">      <span class="attr">xyz.openbmc_project.Inventory.Item.NetworkInterface:</span></span><br><span class="line">        <span class="attr">MACAddress:</span></span><br><span class="line">          <span class="attr">IPMIFruProperty:</span> <span class="string">Custom</span> <span class="string">Field</span> <span class="number">1</span></span><br><span class="line">          <span class="attr">IPMIFruSection:</span> <span class="string">Board</span></span><br><span class="line">  <span class="string">/system:</span></span><br><span class="line">    <span class="attr">entityID:</span> <span class="number">7</span></span><br><span class="line">    <span class="attr">entityInstance:</span> <span class="number">2</span></span><br><span class="line">    <span class="attr">interfaces:</span></span><br><span class="line">      <span class="attr">xyz.openbmc_project.Inventory.Item:</span></span><br><span class="line">        <span class="attr">PrettyName:</span></span><br><span class="line">          <span class="attr">IPMIFruProperty:</span> <span class="string">Name</span></span><br><span class="line">          <span class="attr">IPMIFruSection:</span> <span class="string">Product</span></span><br><span class="line">      <span class="attr">xyz.openbmc_project.Inventory.Decorator.Asset:</span></span><br><span class="line">        <span class="attr">PartNumber:</span></span><br><span class="line">          <span class="attr">IPMIFruProperty:</span> <span class="string">Model</span> <span class="string">Number</span></span><br><span class="line">          <span class="attr">IPMIFruSection:</span> <span class="string">Product</span></span><br><span class="line">        <span class="attr">Manufacturer:</span></span><br><span class="line">          <span class="attr">IPMIFruProperty:</span> <span class="string">Manufacturer</span></span><br><span class="line">          <span class="attr">IPMIFruSection:</span> <span class="string">Product</span></span><br><span class="line">        <span class="attr">SerialNumber:</span></span><br><span class="line">          <span class="attr">IPMIFruProperty:</span> <span class="string">Serial</span> <span class="string">Number</span></span><br><span class="line">          <span class="attr">IPMIFruSection:</span> <span class="string">Product</span></span><br><span class="line">      <span class="attr">xyz.openbmc_project.Inventory.Decorator.Revision:</span></span><br><span class="line">        <span class="attr">Version:</span></span><br><span class="line">          <span class="attr">IPMIFruProperty:</span> <span class="string">Version</span></span><br><span class="line">          <span class="attr">IPMIFruSection:</span> <span class="string">Product</span></span><br><span class="line">      <span class="attr">xyz.openbmc_project.Inventory.Decorator.AssetTag:</span></span><br><span class="line">        <span class="attr">AssetTag:</span></span><br><span class="line">          <span class="attr">IPMIFruProperty:</span> <span class="string">Asset</span> <span class="string">Tag</span></span><br><span class="line">          <span class="attr">IPMIFruSection:</span> <span class="string">Product</span></span><br></pre></td></tr></table></figure>
+
+<p>PROP_YAML目前還不確定其property是哪邊會參考, 大都是設定以下參數</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">xyz.openbmc_project.Inventory.Decorator.Replaceable:</span></span><br><span class="line">    <span class="attr">FieldReplaceable:</span> <span class="string">&#x27;true&#x27;</span></span><br><span class="line"><span class="attr">xyz.openbmc_project.Inventory.Decorator.Cacheable:</span></span><br><span class="line">    <span class="attr">Cached:</span> <span class="string">&#x27;true&#x27;</span></span><br><span class="line"><span class="attr">xyz.openbmc_project.Inventory.Item:</span></span><br><span class="line">    <span class="attr">Present:</span> <span class="string">&#x27;true</span></span><br></pre></td></tr></table></figure>
+
+<p>剩下還需要指定這個fru是要從哪個eeprom讀取,<br>首先要讓eeprom裝置長出來在, 需修改dts定義並嘗試讀&#x2F;寫確定其已正常運作</p>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">&amp;i2c6</span> <span class="punctuation">&#123;</span></span><br><span class="line">	<span class="attr">status</span> <span class="operator">=</span> <span class="string">&quot;okay&quot;</span><span class="punctuation">;</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">//BMC FRU</span></span><br><span class="line">	<span class="comment">//slave addr 0xA8</span></span><br><span class="line">	<span class="title class_">eeprom@54</span> <span class="punctuation">&#123;</span></span><br><span class="line">		<span class="attr">compatible</span> <span class="operator">=</span> <span class="string">&quot;atmel,24c08&quot;</span><span class="punctuation">;</span></span><br><span class="line">		<span class="attr">reg</span> <span class="operator">=</span> <span class="params">&lt;<span class="number">0x54</span>&gt;</span><span class="punctuation">;</span></span><br><span class="line">		<span class="attr">pagesize</span> <span class="operator">=</span> <span class="params">&lt;<span class="number">16</span>&gt;</span><span class="punctuation">;</span></span><br><span class="line">	<span class="punctuation">&#125;;</span></span><br><span class="line"><span class="punctuation">&#125;;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">hexdump /sys/bus/i2c/devices/6-0054/eeprom -C</span><br><span class="line">00000000  01 00 01 09 13 17 00 cb  01 08 17 ca 63 68 61 73  |............chas|</span><br><span class="line">00000010  73 69 73 20 50 4e ca 63  68 61 73 73 69 73 20 53  |sis PN.chassis S|</span><br><span class="line">00000020  4e dc 41 75 74 6f 2d 74  79 70 65 64 20 74 65 78  |N.Auto-typed tex|</span><br><span class="line">00000030  74 20 63 75 73 74 6f 6d  20 66 69 65 6c 64 03 b1  |t custom field..|</span><br><span class="line">00000040  4a 87 c1 00 00 00 00 1f  01 0a 19 <span class="built_in">cd</span> f1 d0 c9 4f  |J..............O|</span><br><span class="line">00000050  70 65 6e 42 6f 61 72 64  c3 65 76 62 c7 53 6e 2e  |penBoard.evb.Sn.|</span><br><span class="line">00000060  31 30 30 31 c6 65 76 62  2d 30 31 c0 d1 45 30 3a  |1001.evb-01..E0:|</span><br><span class="line">00000070  32 30 3a 32 30 3a 30 31  3a 31 30 3a 30 31 d1 45  |20:20:01:10:01.E|</span><br><span class="line">00000080  30 3a 32 30 3a 32 30 3a  30 31 3a 31 30 3a 30 32  |0:20:20:01:10:02|</span><br><span class="line">00000090  c1 00 00 00 00 00 00 e2  01 04 19 ca 4f 70 65 6e  |............Open|</span><br><span class="line">000000a0  42 6d 63 20 46 77 c3 65  76 62 c0 c0 c7 53 6e 2e  |Bmc Fw.evb...Sn.|</span><br><span class="line">000000b0  32 30 30 31 c0 c0 c1 5d  03 02 11 5d 8d 07 99 07  |2001...]...]....|</span><br><span class="line">000000c0  d7 9b f0 cc 15 49 a7 f9  7c e7 d6 43 85 cf 03 02  |.....I..|..C....|</span><br><span class="line">000000d0  08 5a 99 02 4f 70 65 6e  42 6d 63 03 82 1d 88 d6  |.Z..OpenBmc.....|</span><br><span class="line">000000e0  01 68 74 74 70 3a 2f 2f  66 69 6e 61 6e 63 65 2e  |.http://finance.|</span><br><span class="line">000000f0  73 63 2e 68 70 2e 63 6f  6d 3a 32 38 30 00 00 00  |sc.hp.com:280...|</span><br><span class="line">00000100  ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff  |................|</span><br></pre></td></tr></table></figure>
+
+
+<p>實際上phosphor-ipmi-fru是提供一個onesot service, 透過of-name-to-eeprom.sh讀取eeprom並將解析後的資料丟到d-bus</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash -eu</span></span><br><span class="line">[ -n <span class="string">&quot;<span class="variable">$&#123;OF_NAME+1&#125;</span>&quot;</span> ] || <span class="built_in">exit</span> 0</span><br><span class="line">path=<span class="string">&quot;<span class="subst">$(grep -xl <span class="string">&quot;<span class="variable">$OF_NAME</span>&quot;</span> /sys/bus/i2c/devices/*/of_node/name)</span>&quot;</span></span><br><span class="line">eeprom=<span class="string">&quot;<span class="variable">$&#123;path%/of_node/name&#125;</span>/eeprom&quot;</span></span><br><span class="line">sed -i <span class="string">&quot;s,^SYSFS_PATH=.*$,SYSFS_PATH=<span class="variable">$eeprom</span>,&quot;</span> <span class="string">&quot;<span class="variable">$1</span>&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>需要帶入兩個參數<code>path</code> &amp; <code>eeprom需要在自己的layer加入對應的檔案內容如下 </code>meta-custom&#x2F;recipes-phosphor&#x2F;ipmi&#x2F;phosphor-ipmi-fru&#x2F;obmc&#x2F;eeproms&#x2F;*&#96;</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SYSFS_PATH=/sys/bus/i2c/devices/6-0054/eeprom</span><br><span class="line">FRUID=0</span><br></pre></td></tr></table></figure>
+
+<h2 id="misc-debug"><a href="#misc-debug" class="headerlink" title="misc &amp; debug"></a>misc &amp; debug</h2><p>傳入的YAML會被轉換成cpp直接被編譯到libwritefrudata.so, 產生出的檔案位於<code>oe-workdir/phosphor-ipmi-fru-1.0+git999/</code>分別為<code>fru-gen.cpp</code> &amp; <code>extra-properties-gen.cpp</code>可以直接檢查是否正確, 在修改yaml後將libwritefrudata.so丟到<code>/usr/lib/</code>覆蓋就可使修改內容生效.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scp oe-workdir/package/usr/lib/libwritefrudata.so.1.0.0 root@ob:/usr/lib/</span><br></pre></td></tr></table></figure>
+
+<p>可以透過直接執行phosphor-read-eeprom更新資料或讓obmc-read-eeprom再執行一次</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/usr/bin/env phosphor-read-eeprom --eeprom /sys/bus/i2c/devices/6-0054/eeprom --fruid 0</span><br><span class="line">bash</span><br><span class="line">systemctl start obmc-read-eeprom@system-chassis-motherboard.service</span><br></pre></td></tr></table></figure>
+
+<p>更新eeprom內容直接透過cat寫入</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> /fru.bin &gt; /sys/bus/i2c/devices/6-0054/eeprom</span><br></pre></td></tr></table></figure>
+
+<p>確認sevice執行狀態</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">systemctl status obmc-read-eeprom@system-chassis-motherboard.service</span><br><span class="line">○ obmc-read-eeprom@system-chassis-motherboard.service - Read system/chassis/motherboard EEPROM</span><br><span class="line">     Loaded: loaded (/lib/systemd/system/obmc-read-eeprom@.service; static)</span><br><span class="line">     Active: inactive (dead) since Thu 2022-01-13 10:10:59 UTC; 2min 3s ago</span><br><span class="line">    Process: 507 ExecStartPre=/usr/bin/of-name-to-eeprom.sh /etc/default/obmc/eeproms/system/chassis/motherboard (code=exited, status=0/SUCCESS)</span><br><span class="line">    Process: 509 ExecStart=/usr/bin/env phosphor-read-eeprom --eeprom <span class="variable">$SYSFS_PATH</span> --fruid <span class="variable">$FRUID</span> (code=exited, status=0/SUCCESS)</span><br><span class="line">   Main PID: 509 (code=exited, status=0/SUCCESS)</span><br><span class="line"></span><br><span class="line">Jan 13 10:10:58 ob systemd[1]: Starting Read system/chassis/motherboard EEPROM...</span><br><span class="line">Jan 13 10:10:59 ob systemd[1]: obmc-read-eeprom@system-chassis-motherboard.service: Deactivated successfully.</span><br><span class="line">Jan 13 10:10:59 ob systemd[1]: Finished Read system/chassis/motherboard EEPROM.</span><br></pre></td></tr></table></figure>
+
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a target="_blank" rel="noopener" href="https://www.intel.com/content/dam/www/public/us/en/documents/product-briefs/platform-management-fru-document-rev-1-2-feb-2013.pdf">Platform Management FRU Information Storage Definition</a><br><a target="_blank" rel="noopener" href="https://github.com/openbmc/ipmi-fru-parser/blob/c19c054c01b7a42c24cdf38a270b33f56290abf3/scripts/example.yaml">Phosphor fru yaml example</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://j0x01y.github.io/2021/12/20/Git-repository%E6%90%AC%E7%A7%BB%E5%88%B0gerrit/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="J1Y">
+      <meta itemprop="description" content="x86 BIOS/ Yocto Project/ Embedded Linux/ MCU">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="J1Y工作筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/12/20/Git-repository%E6%90%AC%E7%A7%BB%E5%88%B0gerrit/" class="post-title-link" itemprop="url">Git repository搬移到gerrit</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2021-12-20 11:07:59" itemprop="dateCreated datePublished" datetime="2021-12-20T11:07:59+08:00">2021-12-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2025-04-22 11:39:09" itemprop="dateModified" datetime="2025-04-22T11:39:09+08:00">2025-04-22</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Git-Server/" itemprop="url" rel="index"><span itemprop="name">Git Server</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h1 id="Mirror-repo-form-gitlab-to-gerrit"><a href="#Mirror-repo-form-gitlab-to-gerrit" class="headerlink" title="Mirror repo form gitlab to gerrit"></a>Mirror repo form gitlab to gerrit</h1><p>主要是需要加上–mirror參數再進行clone&#x2F;push</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> --mirror ssh://gitlab/repo.git</span><br><span class="line"><span class="built_in">cd</span> repo.git/</span><br><span class="line">git remote add gerrit ssh://gerrit/repo</span><br><span class="line">git push --mirror gerrit</span><br></pre></td></tr></table></figure>
+
+<p>但push時會產生許多錯誤, 需要針對Gerrit server進行調整, 以下是我遇到的幾個錯誤以及解決方式</p>
+<h2 id="remote-You-need-‘Forge-Committer’-rights-to-push-commits-with-another-user-as-committer"><a href="#remote-You-need-‘Forge-Committer’-rights-to-push-commits-with-another-user-as-committer" class="headerlink" title="remote: You need ‘Forge Committer’ rights to push commits with another user as committer"></a>remote: You need ‘Forge Committer’ rights to push commits with another user as committer</h2><p>因為TAG創建者不是推送者, 就會顯示這個錯誤; git push時會顯示以下內容</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">git push --mirror gerrit</span><br><span class="line">remote: You need <span class="string">&#x27;Forge Committer&#x27;</span> rights to push commits with another user as committer.</span><br><span class="line">remote: User: J1Y</span><br><span class="line">remote: Contact an administrator to fix the permissions</span><br><span class="line">! [remote rejected]     2.10.0-dev -&gt; 2.10.0-dev (prohibited by Gerrit: not permitted: forge committer)</span><br><span class="line">! [remote rejected]     2.10.0-rc1 -&gt; 2.10.0-rc1 (prohibited by Gerrit: not permitted: forge committer)</span><br></pre></td></tr></table></figure>
+
+<p>需要修改Gerrit權限設定開放以下權限<br><code>Allow Forge Author Identity</code><br><code>Allow Forge Committer Identity</code><br><code>Allow Forge Server Identity</code></p>
+<p><img src="https://j0x01y.github.io/2021/12/20/git-repository-migration-to-gerrit/GerritForgeIdentity.png" alt="GerritForgeIdentity"></p>
+<h2 id="remote-commit-028af1d-warning-subject-200-characters-use-shorter-first-paragraph"><a href="#remote-commit-028af1d-warning-subject-200-characters-use-shorter-first-paragraph" class="headerlink" title="remote: commit 028af1d: warning: subject &gt;200 characters; use shorter first paragraph"></a>remote: commit 028af1d: warning: subject &gt;200 characters; use shorter first paragraph</h2><p>開源的專案的commit message裡面通常會包含許多討論內容, 推送時會將其刪減需要修改gerrit的設定,設定檔位於<code>gerrit-site/etc/gerrit.config</code>, 根據需求調整<code>commitmessage.maxSubjectLength</code> &amp; <code>commitmessage.maxLineLength</code>同時建議也修改<code>receive.maxBatchCommits</code> &amp; <code>receive.timeout</code>這兩個設定會影響一次推送的commit數量限制以及超時上限</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[receive]</span><br><span class="line">	maxBatchCommits = 1000000</span><br><span class="line">	timeout = 120min</span><br><span class="line">[commitmessage]</span><br><span class="line">	maxSubjectLength = 200</span><br><span class="line">	maxLineLength = 200</span><br></pre></td></tr></table></figure>
+
+<h2 id="remote-Processing-changes-refs-11-error-branches-refs-heads-master-refs-meta-config"><a href="#remote-Processing-changes-refs-11-error-branches-refs-heads-master-refs-meta-config" class="headerlink" title="remote: Processing changes: refs: 11 (-)error: branches refs&#x2F;heads&#x2F;master, refs&#x2F;meta&#x2F;config:"></a>remote: Processing changes: refs: 11 (-)error: branches refs&#x2F;heads&#x2F;master, refs&#x2F;meta&#x2F;config:</h2><p>這個是因為推送時遠端已有相同的分支, 可以將Gerrit的master刪除並且從Gerrit抓config</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git fetch gerrit refs/meta/config:refs/meta/config</span><br></pre></td></tr></table></figure>
+
+<h2 id="remote-rejected-v0-6-1-v0-6-1-prohibited-by-Gerrit-update-for-creating-new-commit-object-not-permitted"><a href="#remote-rejected-v0-6-1-v0-6-1-prohibited-by-Gerrit-update-for-creating-new-commit-object-not-permitted" class="headerlink" title="! [remote rejected] v0.6.1 -&gt; v0.6.1 (prohibited by Gerrit: update for creating new commit object not permitted)"></a>! [remote rejected] v0.6.1 -&gt; v0.6.1 (prohibited by Gerrit: update for creating new commit object not permitted)</h2><p>這個我就不知道出現的原因, 唯有這個tag沒辦法推上去. 我又額外開啟兩個權限之後就一切正常<br><code>Allow Create Reference</code><br><code>Allow Push with or without force</code></p>
+<p><img src="https://j0x01y.github.io/2021/12/20/git-repository-migration-to-gerrit/GerritCreatRef.png" alt="GerritCreatRef"></p>
+<p>修改完以上設定後終於可以完整鏡像repo…完結撒花～</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line">git push --mirror gerrit</span><br><span class="line">Enumerating objects: 190731, <span class="keyword">done</span>.</span><br><span class="line">Counting objects: 100% (190731/190731), <span class="keyword">done</span>.</span><br><span class="line">Delta compression using up to 64 threads</span><br><span class="line">Compressing objects: 100% (73550/73550), <span class="keyword">done</span>.</span><br><span class="line">Writing objects: 100% (190731/190731), 83.37 MiB | 12.69 MiB/s, <span class="keyword">done</span>.</span><br><span class="line">Total 190731 (delta 105786), reused 190731 (delta 105786)</span><br><span class="line">remote: Resolving deltas: 100% (105786/105786)</span><br><span class="line">remote: Counting objects: 190789, <span class="keyword">done</span></span><br><span class="line">remote: Processing changes: refs: 57, <span class="keyword">done</span>    </span><br><span class="line">To ssh://GerritServer:8021/ob</span><br><span class="line"> + 2271be5ce...adf918bc3 refs/meta/config -&gt; refs/meta/config (forced update)</span><br><span class="line"> * [new branch]          dunfell -&gt; dunfell</span><br><span class="line"> * [new branch]          gatesgarth -&gt; gatesgarth</span><br><span class="line"> * [new branch]          hardknott -&gt; hardknott</span><br><span class="line"> * [new branch]          master -&gt; master</span><br><span class="line"> * [new branch]          thud -&gt; thud</span><br><span class="line"> * [new branch]          v1.0-stable -&gt; v1.0-stable</span><br><span class="line"> * [new branch]          warrior -&gt; warrior</span><br><span class="line"> * [new tag]             2.10.0-dev -&gt; 2.10.0-dev</span><br><span class="line"> * [new tag]             2.10.0-rc1 -&gt; 2.10.0-rc1</span><br><span class="line"> * [new tag]             2.11.0-dev -&gt; 2.11.0-dev</span><br><span class="line"> * [new tag]             2.6.0 -&gt; 2.6.0</span><br><span class="line"> * [new tag]             2.6.0-rc1 -&gt; 2.6.0-rc1</span><br><span class="line"> * [new tag]             2.6.0.rc1 -&gt; 2.6.0.rc1</span><br><span class="line"> * [new tag]             2.7.0 -&gt; 2.7.0</span><br><span class="line"> * [new tag]             2.7.0-dev -&gt; 2.7.0-dev</span><br><span class="line"> * [new tag]             2.7.0-rc1 -&gt; 2.7.0-rc1</span><br><span class="line"> * [new tag]             2.8.0 -&gt; 2.8.0</span><br><span class="line"> * [new tag]             2.8.0-dev -&gt; 2.8.0-dev</span><br><span class="line"> * [new tag]             2.8.0-rc1 -&gt; 2.8.0-rc1</span><br><span class="line"> * [new tag]             2.9.0 -&gt; 2.9.0</span><br><span class="line"> * [new tag]             2.9.0-dev -&gt; 2.9.0-dev</span><br><span class="line"> * [new tag]             2.9.0-rc1 -&gt; 2.9.0-rc1</span><br><span class="line"> * [new tag]             v0.1 -&gt; v0.1</span><br><span class="line"> * [new tag]             v0.2 -&gt; v0.2</span><br><span class="line"> * [new tag]             v0.3 -&gt; v0.3</span><br><span class="line"> * [new tag]             v0.4 -&gt; v0.4</span><br><span class="line"> * [new tag]             v0.5 -&gt; v0.5</span><br><span class="line"> * [new tag]             v0.6 -&gt; v0.6</span><br><span class="line"> * [new tag]             v0.6.1 -&gt; v0.6.1</span><br><span class="line"> * [new tag]             v0.7 -&gt; v0.7</span><br><span class="line"> * [new tag]             v0.8 -&gt; v0.8</span><br><span class="line"> * [new tag]             v0.8.1 -&gt; v0.8.1</span><br><span class="line"> * [new tag]             v1.0 -&gt; v1.0</span><br><span class="line"> * [new tag]             v1.0.1 -&gt; v1.0.1</span><br><span class="line"> * [new tag]             v1.0.2 -&gt; v1.0.2</span><br><span class="line"> * [new tag]             v1.0.3 -&gt; v1.0.3</span><br><span class="line"> * [new tag]             v1.0.4 -&gt; v1.0.4</span><br><span class="line"> * [new tag]             v1.0.5 -&gt; v1.0.5</span><br><span class="line"> * [new tag]             v1.99.0 -&gt; v1.99.0</span><br><span class="line"> * [new tag]             v1.99.1 -&gt; v1.99.1</span><br><span class="line"> * [new tag]             v1.99.10 -&gt; v1.99.10</span><br><span class="line"> * [new tag]             v1.99.2 -&gt; v1.99.2</span><br><span class="line"> * [new tag]             v1.99.3 -&gt; v1.99.3</span><br><span class="line"> * [new tag]             v1.99.4 -&gt; v1.99.4</span><br><span class="line"> * [new tag]             v1.99.5 -&gt; v1.99.5</span><br><span class="line"> * [new tag]             v1.99.6 -&gt; v1.99.6</span><br><span class="line"> * [new tag]             v1.99.7 -&gt; v1.99.7</span><br><span class="line"> * [new tag]             v1.99.8 -&gt; v1.99.8</span><br><span class="line"> * [new tag]             v1.99.9 -&gt; v1.99.9</span><br><span class="line"> * [new tag]             v2.0 -&gt; v2.0</span><br><span class="line"> * [new tag]             v2.1 -&gt; v2.1</span><br><span class="line"> * [new tag]             v2.2 -&gt; v2.2</span><br><span class="line"> * [new tag]             v2.3 -&gt; v2.3</span><br><span class="line"> * [new tag]             v2.4 -&gt; v2.4</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目錄
+        </li>
+        <li class="sidebar-nav-overview">
+          本站概要
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">J1Y</p>
+  <div class="site-description" itemprop="description">x86 BIOS/ Yocto Project/ Embedded Linux/ MCU</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分類</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">標籤</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">J1Y</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 強力驅動
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme    : 'default',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+  
+
+  
+
+</body>
+</html>
