@@ -158,6 +158,154 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
+    <link itemprop="mainEntityOfPage" href="https://j0x01y.github.io/2025/04/22/IAP%E8%88%87APP%E5%85%B1%E7%94%A8%E5%8A%A0%E5%AF%86%E6%BC%94%E7%AE%97%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="J1Y">
+      <meta itemprop="description" content="x86 BIOS/ Yocto Project/ Embedded Linux/ MCU">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="J1Y工作筆記">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2025/04/22/IAP%E8%88%87APP%E5%85%B1%E7%94%A8%E5%8A%A0%E5%AF%86%E6%BC%94%E7%AE%97%E6%B3%95/" class="post-title-link" itemprop="url">IAP與APP共用加密演算法</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">發表於</span>
+
+              <time title="創建時間：2025-04-22 15:00:25" itemprop="dateCreated datePublished" datetime="2025-04-22T15:00:25+08:00">2025-04-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新於</span>
+                <time title="修改時間：2025-04-23 14:58:57" itemprop="dateModified" datetime="2025-04-23T14:58:57+08:00">2025-04-23</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分類於</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MCU/" itemprop="url" rel="index"><span itemprop="name">MCU</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="背景說明"><a href="#背景說明" class="headerlink" title="背景說明"></a>背景說明</h2><p>在 bootloader 中為了驗證韌體來源，需加入加密演算法。由於加密演算法會佔用大量 ROM 空間，在某些極端條件下很難完整放入。此外，因為 BOOT（bootloader）與 APP（application）是獨立的兩個程式，當 APP 也使用加密演算法時，會導致 ROM 容量需求倍增。</p>
+<p>本篇實驗將展示如何透過靜態函式庫的方式，讓 BOOT 與 APP 都能共用相同的加密演算法。</p>
+<h2 id="實作細節"><a href="#實作細節" class="headerlink" title="實作細節"></a>實作細節</h2><p>本案例使用 STM32F401RC，透過 MicroSD 卡儲存韌體更新檔案。加密演算法使用 mbedTLS，並搭配 FatFs 檔案系統。首先使用 STM32CubeMX 建立專案：</p>
+<p><img src="/./images/STM32CubeMx_MBEDTLS.png" alt="STM32CubeMx_MBEDTLS"></p>
+<p>確認欲使用的演算法已開啟，本實驗使用 ECDSA P-256，需確保以下設定啟用：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MBEDTLS_ECP_DP_SECP256R1_ENABLED</span><br></pre></td></tr></table></figure>
+
+<p>建置後會使用約 40.4KB 的 Flash 空間：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Memory region         Used Size  Region Size  %age Used</span><br><span class="line">             RAM:        3752 B        64 KB      5.73%</span><br><span class="line">           FLASH:       41380 B       256 KB     15.79%</span><br></pre></td></tr></table></figure>
+
+<p>STM32F401RC 的 Flash 容量為 256KB，區分為 Sector 0~5，前四塊為 16KB、接著為 64KB 和 128KB：</p>
+<p><img src="/./images/STM32F401_FlashLayout.png" alt="STM32F401_FlashLayout"></p>
+<p>以下是規劃的 Flash 分區表：</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Offset</th>
+<th>Size</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Bootlodaer</td>
+<td>0x00000</td>
+<td>32KB</td>
+</tr>
+<tr>
+<td>Data</td>
+<td>0x08000</td>
+<td>32KB</td>
+</tr>
+<tr>
+<td>Crypto</td>
+<td>0x10000</td>
+<td>64KB</td>
+</tr>
+<tr>
+<td>APP</td>
+<td>0x20000</td>
+<td>128KB</td>
+</tr>
+</tbody></table>
+<p>由於 BOOT 區僅 32KB，在啟用 mbedTLS 後會超過限制，因此需進一步優化。</p>
+<p>關閉未使用的功能以減少佔用空間，例如：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MBEDTLS_AES_ROM_TABLES</span><br><span class="line">MBEDTLS_CIPHER_MODE_OFB</span><br><span class="line">MBEDTLS_CIPHER_MODE_XTS</span><br></pre></td></tr></table></figure>
+
+<p>CubeMX 會將設定輸出至 <code>./MBEDTLS/App/mbedtls_config.h</code>，並只包含啟用功能的 <code>.c</code> 檔案。若更改功能組合，請重新產生代碼以避免錯誤。</p>
+<p>精簡後的佔用情況：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Memory region         Used Size  Region Size  %age Used</span><br><span class="line">             RAM:        3752 B        64 KB      5.73%</span><br><span class="line">           FLASH:       36532 B       256 KB     13.94%</span><br></pre></td></tr></table></figure>
+
+<p>仍然不足，接下來的關鍵為：<strong>將 mbedTLS 從 BOOT 中抽出成為獨立函式庫</strong>。</p>
+<h2 id="拆分靜態函式庫"><a href="#拆分靜態函式庫" class="headerlink" title="拆分靜態函式庫"></a>拆分靜態函式庫</h2><p>若使用 CMake，可將 <code>OBJECT</code> 改為 <code>STATIC</code>，使其輸出為 <code>.a</code> 靜態函式庫檔案：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">add_library</span>(mbedTLS STATIC)</span><br><span class="line"><span class="keyword">target_sources</span>(mbedTLS PRIVATE <span class="variable">$&#123;mbedTLS_Src&#125;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>建置後生成的檔案會在：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">build/MinSizeRel/cmake/stm32cubemx/libmbedTLS.a</span><br></pre></td></tr></table></figure>
+
+<p>可以看到他原本就是將其建置為函式庫但為<code>OBJECT</code>的類型, 代表CMAKE不會將它獨立成一個檔案而是直接附加到執行檔裡, 故這裡先將它改成<code>STATIC</code>再建置, 這樣就會產生靜態函式庫*.a檔案會在<code>build/MinSizeRel/cmake/stm32cubemx/libmbedTLS.a</code></p>
+<h3 id="修改連結腳本"><a href="#修改連結腳本" class="headerlink" title="修改連結腳本"></a>修改連結腳本</h3><p>將 <code>STM32F401XX_FLASH.ld</code> 調整為符合實際配置：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">MEMORY</span><br><span class="line">&#123;</span><br><span class="line">RAM (xrw)      : ORIGIN = 0x20000000, LENGTH = 64K</span><br><span class="line">FLASH (rx)     : ORIGIN = 0x8000000, LENGTH = 32K</span><br><span class="line">DATA   (r)     : ORIGIN = 0x8008000, LENGTH = 32K</span><br><span class="line">CRYPTO (rx)    : ORIGIN = 0x8010000, LENGTH = 64K</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>原本 <code>.text</code> 段中加入排除 <code>libmbedTLS</code> 的設定，並建立新的段 <code>.text.crypto</code> 和 <code>.rodata.crypto</code>：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">/* The program code and other data goes into FLASH */</span><br><span class="line">.text :</span><br><span class="line">&#123;</span><br><span class="line">  . = ALIGN(4);</span><br><span class="line">  *(EXCLUDE_FILE(*libmbedTLS.a:*) .text)</span><br><span class="line">  *(EXCLUDE_FILE(*libmbedTLS.a:*) .text*)</span><br><span class="line">  *(.glue_7)         /* glue arm to thumb code */</span><br><span class="line">  *(.glue_7t)        /* glue thumb to arm code */</span><br><span class="line">  *(.eh_frame)</span><br><span class="line"></span><br><span class="line">  KEEP (*(.init))</span><br><span class="line">  KEEP (*(.fini))</span><br><span class="line"></span><br><span class="line">  . = ALIGN(4);</span><br><span class="line">  _etext = .;        /* define a global symbols at end of code */</span><br><span class="line">&#125; &gt;FLASH</span><br><span class="line"></span><br><span class="line">.text.crypto :</span><br><span class="line">&#123;</span><br><span class="line">  . = ALIGN(4);</span><br><span class="line">  KEEP(*libmbedTLS.a:*(.text*))</span><br><span class="line">  *libmbedTLS.a:*(.text*)</span><br><span class="line">  . = ALIGN(4);</span><br><span class="line">&#125; &gt; CRYPTO</span><br><span class="line"></span><br><span class="line">.rodata.crypto :</span><br><span class="line">&#123;</span><br><span class="line">  . = ALIGN(4);</span><br><span class="line">  *libmbedTLS.a:*(.rodata*)</span><br><span class="line">  . = ALIGN(4);</span><br><span class="line">&#125; &gt;CRYPTO</span><br><span class="line"></span><br><span class="line">/* Constant data goes into FLASH */</span><br><span class="line">.rodata :</span><br><span class="line">&#123;</span><br><span class="line">  . = ALIGN(4);</span><br><span class="line">  *(EXCLUDE_FILE(*libmbedTLS.a:*) .rodata)</span><br><span class="line">  *(EXCLUDE_FILE(*libmbedTLS.a:*) .rodata*)</span><br><span class="line">  . = ALIGN(4);</span><br><span class="line">&#125; &gt;FLASH</span><br></pre></td></tr></table></figure>
+
+<p>建置後的佔用情況：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Memory region         Used Size  Region Size  %age Used</span><br><span class="line">             RAM:        3760 B        64 KB      5.74%</span><br><span class="line">           FLASH:       13788 B        32 KB     42.08%</span><br><span class="line">            DATA:           0 B        32 KB      0.00%</span><br><span class="line">          CRYPTO:       32100 B        64 KB     48.98%</span><br></pre></td></tr></table></figure>
+
+<h2 id="附加說明：建立共用架構"><a href="#附加說明：建立共用架構" class="headerlink" title="附加說明：建立共用架構"></a>附加說明：建立共用架構</h2><p>為確保 BOOT 與 APP 使用相同的函式庫設定與編譯器選項，建議將 mbedTLS 完全抽出為上層共用的靜態函式庫：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── Middlewares</span><br><span class="line">│   ├── FatFs</span><br><span class="line">│   └── mbedTLS</span><br><span class="line">├── application</span><br><span class="line">│   ├── Core</span><br><span class="line">│   ├── Drivers</span><br><span class="line">│   └── cmake</span><br><span class="line">├── bootloader</span><br><span class="line">│   ├── Core</span><br><span class="line">│   ├── Drivers</span><br><span class="line">│   ├── FATFS</span><br><span class="line">│   ├── Middlewares</span><br><span class="line">│   └── cmake</span><br><span class="line">└── cmake</span><br></pre></td></tr></table></figure>
+
+<p>透過<code>ExternalProject</code>建置並加入相依性確保mbedTLS建置後才能繼續建置BOOT &amp; APP</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cmake_minimum_required</span>(VERSION <span class="number">3.22</span>)</span><br><span class="line"><span class="keyword">project</span>(FirmwareSuperBuild NONE)</span><br><span class="line"></span><br><span class="line"><span class="keyword">include</span>(ExternalProject)</span><br><span class="line"></span><br><span class="line"><span class="keyword">set</span>(TOOLCHAIN_FILE <span class="variable">$&#123;CMAKE_SOURCE_DIR&#125;</span>/cmake/gcc-arm-none-eabi.cmake)</span><br><span class="line"><span class="keyword">set</span>(MBEDTLS_INSTALL_DIR <span class="variable">$&#123;CMAKE_BINARY_DIR&#125;</span>/mbedtls-<span class="keyword">install</span>)</span><br><span class="line"></span><br><span class="line">ExternalProject_Add(mbedtls</span><br><span class="line">    SOURCE_DIR <span class="variable">$&#123;CMAKE_SOURCE_DIR&#125;</span>/Middlewares/mbedTLS</span><br><span class="line">    BINARY_DIR <span class="variable">$&#123;CMAKE_BINARY_DIR&#125;</span>/mbedtls-build</span><br><span class="line">    INSTALL_DIR <span class="variable">$&#123;CMAKE_BINARY_DIR&#125;</span>/mbedtls-<span class="keyword">install</span></span><br><span class="line">    CMAKE_ARGS -DCMAKE_TOOLCHAIN_FILE=<span class="variable">$&#123;TOOLCHAIN_FILE&#125;</span></span><br><span class="line">               -DCMAKE_BUILD_TYPE:<span class="keyword">STRING</span>=<span class="variable">$&#123;CMAKE_BUILD_TYPE&#125;</span></span><br><span class="line">               -DCMAKE_INSTALL_PREFIX=<span class="variable">$&#123;MBEDTLS_INSTALL_DIR&#125;</span></span><br><span class="line">    BUILD_ALWAYS <span class="keyword">TRUE</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">ExternalProject_Add(bootloader</span><br><span class="line">    SOURCE_DIR <span class="variable">$&#123;CMAKE_SOURCE_DIR&#125;</span>/bootloader</span><br><span class="line">    DEPENDS mbedtls</span><br><span class="line">    CMAKE_ARGS -DCMAKE_TOOLCHAIN_FILE=<span class="variable">$&#123;TOOLCHAIN_FILE&#125;</span></span><br><span class="line">               -DCMAKE_BUILD_TYPE:<span class="keyword">STRING</span>=<span class="variable">$&#123;CMAKE_BUILD_TYPE&#125;</span></span><br><span class="line">               -DMBEDTLS_INSTALL_DIR=<span class="variable">$&#123;MBEDTLS_INSTALL_DIR&#125;</span></span><br><span class="line">    BUILD_ALWAYS <span class="keyword">TRUE</span></span><br><span class="line">    INSTALL_COMMAND <span class="string">&quot;&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">ExternalProject_Add(application</span><br><span class="line">    SOURCE_DIR <span class="variable">$&#123;CMAKE_SOURCE_DIR&#125;</span>/application</span><br><span class="line">    DEPENDS mbedtls</span><br><span class="line">    CMAKE_ARGS -DCMAKE_TOOLCHAIN_FILE=<span class="variable">$&#123;TOOLCHAIN_FILE&#125;</span></span><br><span class="line">               -DCMAKE_BUILD_TYPE:<span class="keyword">STRING</span>=<span class="variable">$&#123;CMAKE_BUILD_TYPE&#125;</span></span><br><span class="line">               -DMBEDTLS_INSTALL_DIR=<span class="variable">$&#123;MBEDTLS_INSTALL_DIR&#125;</span></span><br><span class="line">    BUILD_ALWAYS <span class="keyword">TRUE</span></span><br><span class="line">    INSTALL_COMMAND <span class="string">&quot;&quot;</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>在 bootloader 與 application 的 <code>CMakeLists.txt</code> 中加上：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">add_library</span>(mbedTLS STATIC IMPORTED)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">NOT</span> <span class="keyword">DEFINED</span> MBEDTLS_INSTALL_DIR)</span><br><span class="line">  <span class="keyword">message</span>(FATAL_ERROR <span class="string">&quot;MBEDTLS_INSTALL_DIR is not set. Please pass -DMBEDTLS_INSTALL_DIR to CMake.&quot;</span>)</span><br><span class="line"><span class="keyword">endif</span>()</span><br><span class="line"></span><br><span class="line"><span class="keyword">set_target_properties</span>(mbedTLS PROPERTIES</span><br><span class="line">  IMPORTED_LOCATION <span class="string">&quot;$&#123;MBEDTLS_INSTALL_DIR&#125;/lib/libmbedTLS.a&quot;</span></span><br><span class="line">  INTERFACE_INCLUDE_DIRECTORIES <span class="string">&quot;$&#123;MBEDTLS_INSTALL_DIR&#125;/include&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Add linked libraries</span></span><br><span class="line"><span class="keyword">target_link_libraries</span>(<span class="variable">$&#123;CMAKE_PROJECT_NAME&#125;</span></span><br><span class="line">    stm32cubemx</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Add user defined libraries</span></span><br><span class="line">    mbedTLS</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-TW">
     <link itemprop="mainEntityOfPage" href="https://j0x01y.github.io/2022/01/19/openbmc%E4%BD%BF%E7%94%A8D-Feet-debug-d-bus/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -809,16 +957,16 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-count">4</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-count">3</span>
         <span class="site-state-item-name">分類</span>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">標籤</span>
       </div>
   </nav>
