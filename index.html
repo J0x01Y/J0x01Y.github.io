@@ -189,7 +189,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新於</span>
-                <time title="修改時間：2025-04-23 15:30:17" itemprop="dateModified" datetime="2025-04-23T15:30:17+08:00">2025-04-23</time>
+                <time title="修改時間：2025-04-23 15:46:47" itemprop="dateModified" datetime="2025-04-23T15:46:47+08:00">2025-04-23</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -215,7 +215,7 @@
           <h2 id="背景說明"><a href="#背景說明" class="headerlink" title="背景說明"></a>背景說明</h2><p>在 bootloader 中為了驗證韌體來源，需加入加密演算法。由於加密演算法會佔用大量 ROM 空間，在某些極端條件下很難完整放入。此外，因為 BOOT（bootloader）與 APP（application）是獨立的兩個程式，當 APP 也使用加密演算法時，會導致 ROM 容量需求倍增。</p>
 <p>本篇實驗將展示如何透過靜態函式庫的方式，讓 BOOT 與 APP 都能共用相同的加密演算法。</p>
 <h2 id="實作細節"><a href="#實作細節" class="headerlink" title="實作細節"></a>實作細節</h2><p>本案例使用 STM32F401RC，透過 MicroSD 卡儲存韌體更新檔案。加密演算法使用 mbedTLS，並搭配 FatFs 檔案系統。首先使用 STM32CubeMX 建立專案：</p>
-<p><img src="/.io//STM32CubeMx_MBEDTLS.png" alt="STM32CubeMx_MBEDTLS"></p>
+<p><img src="/2025/04/22/IAP%E8%88%87APP%E5%85%B1%E7%94%A8%E5%8A%A0%E5%AF%86%E6%BC%94%E7%AE%97%E6%B3%95/STM32CubeMx_MBEDTLS.png" alt="STM32CubeMx_MBEDTLS"></p>
 <p>確認欲使用的演算法已開啟，本實驗使用 ECDSA P-256，需確保以下設定啟用：</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MBEDTLS_ECP_DP_SECP256R1_ENABLED</span><br></pre></td></tr></table></figure>
 
@@ -223,7 +223,7 @@
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Memory region         Used Size  Region Size  %age Used</span><br><span class="line">             RAM:        3752 B        64 KB      5.73%</span><br><span class="line">           FLASH:       41380 B       256 KB     15.79%</span><br></pre></td></tr></table></figure>
 
 <p>STM32F401RC 的 Flash 容量為 256KB，區分為 Sector 0~5，前四塊為 16KB、接著為 64KB 和 128KB：</p>
-<p><img src="/.io//STM32F401_FlashLayout.png" alt="STM32F401_FlashLayout"></p>
+<p><img src="/2025/04/22/IAP%E8%88%87APP%E5%85%B1%E7%94%A8%E5%8A%A0%E5%AF%86%E6%BC%94%E7%AE%97%E6%B3%95/STM32F401_FlashLayout.png" alt="STM32F401_FlashLayout"></p>
 <p>以下是規劃的 Flash 分區表：</p>
 <table>
 <thead>
@@ -706,7 +706,38 @@
 <h2 id="phosphor-ipmi-fru"><a href="#phosphor-ipmi-fru" class="headerlink" title="phosphor-ipmi-fru"></a>phosphor-ipmi-fru</h2><p>主要功能是解析EEPROM的資料並依照設定檔的定義將其的更新到Inverntory service, 讓其他Module可以存取FRU的資料<br>Recipe meta-phosphor&#x2F;recipes-phosphor&#x2F;ipmi&#x2F;phosphor-ipmi-fru_git.bb<br>Source <a target="_blank" rel="noopener" href="https://github.com/openbmc/ipmi-fru-parser">ipmi-fru-parser</a></p>
 <pre class="mermaid">classDiagram
 
-    EEPROM <.. phosphor_ipmi_fru o.. inventorymanager <-- ipmid <|.. rest_api redfish class eeprom{ -uint8_t data[] +read() +write() } phosphor_ipmi_fru{ -chassis areadata -board -product +exporinverntory() +ipmistoragewritefrudata() inventorymanager{ +path xyz.openbmc_project.inventory +getall() rest_api{ +getinventory() redfish{ ipmid{ +getfrudata() +setfrudata() }< pre>
+    EEPROM <.. phosphor_ipmi_fru
+    phosphor_ipmi_fru o.. InventoryManager
+    phosphor_ipmi_fru <-- Ipmid 
+    InventoryManager <|.. Ipmid
+    InventoryManager <|.. REST_API
+    InventoryManager <|.. Redfish
+    class EEPROM{
+        -uint8_t data[]
+        +read()
+        +write()
+    }
+    class phosphor_ipmi_fru{
+        -Chassis AreaData
+        -Board AreaData
+        -Product AreaData
+        +exporInverntory()
+        +ipmiStorageWriteFruData()
+    }
+    class InventoryManager{
+        +path xyz.openbmc_project.Inventory
+        +GetAll()
+    }
+    class REST_API{
+        +getInventory()
+    }
+    class Redfish{
+        +getInventory()
+    }
+    class Ipmid{
+        +getFruData()
+        +setFruData()
+    }</pre>
 
 <p>需要特別注意的是外部只有Ipmi可以修改fru data, ipmi wetie fru cmd實作是透過phosphor-ipmi-fru提供的libstrgfnhandler.so裡面會註冊Net&#x2F;Cmd &#x3D; 0x0A&#x2F;0x12, 但是只有將傳入的Fru binary更新到Dbus沒有寫回實際的EEPROM, 所以重啟後會看到Inventory會被還原回實際EEPROM的資料.</p>
 <p>而FRU提供的資料只能透過InventoryManager取得映射後的結果, 例如取得FRU board area的資料就需要去system&#x2F;chassis&#x2F;motherboard裡面找, 而與FRU資料定義的關係是透過yaml設定在本文後面會提到</p>
@@ -753,7 +784,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">systemctl status obmc-read-eeprom@system-chassis-motherboard.service</span><br><span class="line">○ obmc-read-eeprom@system-chassis-motherboard.service - Read system/chassis/motherboard EEPROM</span><br><span class="line">     Loaded: loaded (/lib/systemd/system/obmc-read-eeprom@.service; static)</span><br><span class="line">     Active: inactive (dead) since Thu 2022-01-13 10:10:59 UTC; 2min 3s ago</span><br><span class="line">    Process: 507 ExecStartPre=/usr/bin/of-name-to-eeprom.sh /etc/default/obmc/eeproms/system/chassis/motherboard (code=exited, status=0/SUCCESS)</span><br><span class="line">    Process: 509 ExecStart=/usr/bin/env phosphor-read-eeprom --eeprom <span class="variable">$SYSFS_PATH</span> --fruid <span class="variable">$FRUID</span> (code=exited, status=0/SUCCESS)</span><br><span class="line">   Main PID: 509 (code=exited, status=0/SUCCESS)</span><br><span class="line"></span><br><span class="line">Jan 13 10:10:58 ob systemd[1]: Starting Read system/chassis/motherboard EEPROM...</span><br><span class="line">Jan 13 10:10:59 ob systemd[1]: obmc-read-eeprom@system-chassis-motherboard.service: Deactivated successfully.</span><br><span class="line">Jan 13 10:10:59 ob systemd[1]: Finished Read system/chassis/motherboard EEPROM.</span><br></pre></td></tr></table></figure>
 
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a target="_blank" rel="noopener" href="https://www.intel.com/content/dam/www/public/us/en/documents/product-briefs/platform-management-fru-document-rev-1-2-feb-2013.pdf">Platform Management FRU Information Storage Definition</a><br><a target="_blank" rel="noopener" href="https://github.com/openbmc/ipmi-fru-parser/blob/c19c054c01b7a42c24cdf38a270b33f56290abf3/scripts/example.yaml">Phosphor fru yaml example</a></p>
-</..></pre>
+
       
     </div>
 
